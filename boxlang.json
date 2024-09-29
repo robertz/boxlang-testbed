@@ -1,0 +1,19 @@
+{
+    "datasources" : {
+         "chron":{
+            "driver" : "mysql",
+            "url" : "jdbc:mysql://localhost:3306/chron?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true",
+            "username" : "root",
+            "password" : "",
+			"connectionTimeout": 1000
+         }
+    },
+	"modules":{
+		"compat": {
+			"disabled": false,
+			"settings": {
+				"engine" : "lucee"
+			}
+		}
+	}
+}

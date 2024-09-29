@@ -1,0 +1,2465 @@
+{
+  "ASTType" : "BoxClass",
+  "ASTPackage" : "ortus.boxlang.compiler.ast",
+  "sourceText" : "component singleton {\n\n\t// The static java class\n\tvariables.jTimeUnit = createObject( \"java\", \"java.util.concurrent.TimeUnit\" );\n\n\t/**\n\t * Get the appropriate Java timeunit class according to string conventions\n\t *\n\t * @timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * @return The Java time unit class\n\t */\n\tfunction get( required timeUnit = \"milliseconds\" ){\n\t\tswitch ( arguments.timeUnit ) {\n\t\t\tcase \"days\":\n\t\t\tcase \"day\": {\n\t\t\t\treturn variables.jTimeUnit.DAYS;\n\t\t\t}\n\t\t\tcase \"hours\":\n\t\t\tcase \"hour\": {\n\t\t\t\treturn variables.jTimeUnit.HOURS;\n\t\t\t}\n\t\t\tcase \"microseconds\":\n\t\t\tcase \"microsecond\": {\n\t\t\t\treturn variables.jTimeUnit.MICROSECONDS;\n\t\t\t}\n\t\t\tcase \"milliseconds\":\n\t\t\tcase \"millisecond\": {\n\t\t\t\treturn variables.jTimeUnit.MILLISECONDS;\n\t\t\t}\n\t\t\tcase \"minutes\":\n\t\t\tcase \"minute\": {\n\t\t\t\treturn variables.jTimeUnit.MINUTES;\n\t\t\t}\n\t\t\tcase \"nanoseconds\":\n\t\t\tcase \"nanosecond\": {\n\t\t\t\treturn variables.jTimeUnit.NANOSECONDS;\n\t\t\t}\n\t\t\tcase \"seconds\":\n\t\t\tcase \"second\": {\n\t\t\t\treturn variables.jTimeUnit.SECONDS;\n\t\t\t}\n\t\t\tdefault: {\n\t\t\t\tthrow(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t);\n\t\t\t}\n\t\t}\n\t}\n\n}",
+  "position" : {
+    "start" : {
+      "line" : 6,
+      "column" : 0
+    },
+    "end" : {
+      "line" : 58,
+      "column" : 1
+    }
+  },
+  "comments" : [ {
+    "ASTType" : "BoxDocComment",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+    "sourceText" : "/**\n * Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts\n */",
+    "position" : {
+      "start" : {
+        "line" : 1,
+        "column" : 0
+      },
+      "end" : {
+        "line" : 5,
+        "column" : 3
+      }
+    },
+    "comments" : [ ],
+    "commentText" : "\nStatic class to map ColdFusion strings units to Java units\nA TimeUnit does not maintain time information,\nbut only helps organize and use time representations that may be maintained separately across various contexts\n",
+    "annotations" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 113
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+        "position" : {
+          "start" : {
+            "line" : 2,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 113
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+        "position" : {
+          "start" : {
+            "line" : 2,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 113
+          }
+        },
+        "comments" : [ ],
+        "value" : "Static class to map ColdFusion strings units to Java units A TimeUnit does not maintain time information, but only helps organize and use time representations that may be maintained separately across various contexts"
+      }
+    } ]
+  } ],
+  "imports" : [ ],
+  "body" : [ {
+    "ASTType" : "BoxExpressionStatement",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "variables.jTimeUnit = createObject( \"java\", \"java.util.concurrent.TimeUnit\" )",
+    "position" : {
+      "start" : {
+        "line" : 9,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 9,
+        "column" : 78
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxSingleLineComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "// The static java class",
+      "position" : {
+        "start" : {
+          "line" : 8,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 8,
+          "column" : 25
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "The static java class"
+    } ],
+    "expression" : {
+      "ASTType" : "BoxAssignment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "variables.jTimeUnit = createObject( \"java\", \"java.util.concurrent.TimeUnit\" )",
+      "position" : {
+        "start" : {
+          "line" : 9,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 9,
+          "column" : 78
+        }
+      },
+      "comments" : [ ],
+      "modifiers" : [ ],
+      "left" : {
+        "ASTType" : "BoxDotAccess",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".jTimeUnit",
+        "position" : {
+          "start" : {
+            "line" : 9,
+            "column" : 10
+          },
+          "end" : {
+            "line" : 9,
+            "column" : 20
+          }
+        },
+        "comments" : [ ],
+        "context" : {
+          "ASTType" : "BoxScope",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "variables",
+          "position" : {
+            "start" : {
+              "line" : 9,
+              "column" : 1
+            },
+            "end" : {
+              "line" : 9,
+              "column" : 10
+            }
+          },
+          "comments" : [ ],
+          "name" : "variables"
+        },
+        "access" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "jTimeUnit",
+          "position" : {
+            "start" : {
+              "line" : 9,
+              "column" : 11
+            },
+            "end" : {
+              "line" : 9,
+              "column" : 20
+            }
+          },
+          "comments" : [ ],
+          "name" : "JTIMEUNIT"
+        },
+        "safe" : false
+      },
+      "op" : {
+        "ASTType" : "BoxAssignment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Equal"
+      },
+      "right" : {
+        "ASTType" : "BoxFunctionInvocation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "createObject( \"java\", \"java.util.concurrent.TimeUnit\" )",
+        "position" : {
+          "start" : {
+            "line" : 9,
+            "column" : 23
+          },
+          "end" : {
+            "line" : 9,
+            "column" : 78
+          }
+        },
+        "comments" : [ ],
+        "name" : "createObject",
+        "arguments" : [ {
+          "ASTType" : "BoxArgument",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"java\"",
+          "position" : {
+            "start" : {
+              "line" : 9,
+              "column" : 37
+            },
+            "end" : {
+              "line" : 9,
+              "column" : 43
+            }
+          },
+          "comments" : [ ],
+          "name" : null,
+          "value" : {
+            "ASTType" : "BoxStringLiteral",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "\"java\"",
+            "position" : {
+              "start" : {
+                "line" : 9,
+                "column" : 37
+              },
+              "end" : {
+                "line" : 9,
+                "column" : 43
+              }
+            },
+            "comments" : [ ],
+            "value" : "java"
+          }
+        }, {
+          "ASTType" : "BoxArgument",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"java.util.concurrent.TimeUnit\"",
+          "position" : {
+            "start" : {
+              "line" : 9,
+              "column" : 45
+            },
+            "end" : {
+              "line" : 9,
+              "column" : 76
+            }
+          },
+          "comments" : [ ],
+          "name" : null,
+          "value" : {
+            "ASTType" : "BoxStringLiteral",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "\"java.util.concurrent.TimeUnit\"",
+            "position" : {
+              "start" : {
+                "line" : 9,
+                "column" : 45
+              },
+              "end" : {
+                "line" : 9,
+                "column" : 76
+              }
+            },
+            "comments" : [ ],
+            "value" : "java.util.concurrent.TimeUnit"
+          }
+        } ]
+      }
+    }
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "function get( required timeUnit = \"milliseconds\" ){\n\t\tswitch ( arguments.timeUnit ) {\n\t\t\tcase \"days\":\n\t\t\tcase \"day\": {\n\t\t\t\treturn variables.jTimeUnit.DAYS;\n\t\t\t}\n\t\t\tcase \"hours\":\n\t\t\tcase \"hour\": {\n\t\t\t\treturn variables.jTimeUnit.HOURS;\n\t\t\t}\n\t\t\tcase \"microseconds\":\n\t\t\tcase \"microsecond\": {\n\t\t\t\treturn variables.jTimeUnit.MICROSECONDS;\n\t\t\t}\n\t\t\tcase \"milliseconds\":\n\t\t\tcase \"millisecond\": {\n\t\t\t\treturn variables.jTimeUnit.MILLISECONDS;\n\t\t\t}\n\t\t\tcase \"minutes\":\n\t\t\tcase \"minute\": {\n\t\t\t\treturn variables.jTimeUnit.MINUTES;\n\t\t\t}\n\t\t\tcase \"nanoseconds\":\n\t\t\tcase \"nanosecond\": {\n\t\t\t\treturn variables.jTimeUnit.NANOSECONDS;\n\t\t\t}\n\t\t\tcase \"seconds\":\n\t\t\tcase \"second\": {\n\t\t\t\treturn variables.jTimeUnit.SECONDS;\n\t\t\t}\n\t\t\tdefault: {\n\t\t\t\tthrow(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t);\n\t\t\t}\n\t\t}\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 18,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 56,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * Get the appropriate Java timeunit class according to string conventions\n\t *\n\t * @timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * @return The Java time unit class\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 11,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 17,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nGet the appropriate Java timeunit class according to string conventions\n\n@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\n@return The Java time unit class\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 14,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "timeUnit",
+          "position" : {
+            "start" : {
+              "line" : 14,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 14,
+              "column" : 14
+            }
+          },
+          "comments" : [ ],
+          "value" : "timeUnit"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 14,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds "
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@return The Java time unit class\n",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 38
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "return",
+          "position" : {
+            "start" : {
+              "line" : 16,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 12
+            }
+          },
+          "comments" : [ ],
+          "value" : "return"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@return The Java time unit class\n",
+          "position" : {
+            "start" : {
+              "line" : 16,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 38
+            }
+          },
+          "comments" : [ ],
+          "value" : "The Java time unit class"
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+        "position" : {
+          "start" : {
+            "line" : 12,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 12,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+          "position" : {
+            "start" : {
+              "line" : 12,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 12,
+              "column" : 76
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+          "position" : {
+            "start" : {
+              "line" : 12,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 12,
+              "column" : 76
+            }
+          },
+          "comments" : [ ],
+          "value" : "Get the appropriate Java timeunit class according to string conventions"
+        }
+      } ]
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : null,
+    "name" : "get",
+    "args" : [ {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "required timeUnit = \"milliseconds\"",
+      "position" : {
+        "start" : {
+          "line" : 18,
+          "column" : 15
+        },
+        "end" : {
+          "line" : 18,
+          "column" : 49
+        }
+      },
+      "comments" : [ ],
+      "name" : "timeUnit",
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "\"milliseconds\"",
+        "position" : {
+          "start" : {
+            "line" : 18,
+            "column" : 35
+          },
+          "end" : {
+            "line" : 18,
+            "column" : 49
+          }
+        },
+        "comments" : [ ],
+        "value" : "milliseconds"
+      },
+      "required" : true,
+      "type" : "Any",
+      "annotations" : [ ],
+      "documentation" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 14,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 14,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 14,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds "
+        }
+      } ]
+    } ],
+    "body" : [ {
+      "ASTType" : "BoxSwitch",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "switch ( arguments.timeUnit ) {\n\t\t\tcase \"days\":\n\t\t\tcase \"day\": {\n\t\t\t\treturn variables.jTimeUnit.DAYS;\n\t\t\t}\n\t\t\tcase \"hours\":\n\t\t\tcase \"hour\": {\n\t\t\t\treturn variables.jTimeUnit.HOURS;\n\t\t\t}\n\t\t\tcase \"microseconds\":\n\t\t\tcase \"microsecond\": {\n\t\t\t\treturn variables.jTimeUnit.MICROSECONDS;\n\t\t\t}\n\t\t\tcase \"milliseconds\":\n\t\t\tcase \"millisecond\": {\n\t\t\t\treturn variables.jTimeUnit.MILLISECONDS;\n\t\t\t}\n\t\t\tcase \"minutes\":\n\t\t\tcase \"minute\": {\n\t\t\t\treturn variables.jTimeUnit.MINUTES;\n\t\t\t}\n\t\t\tcase \"nanoseconds\":\n\t\t\tcase \"nanosecond\": {\n\t\t\t\treturn variables.jTimeUnit.NANOSECONDS;\n\t\t\t}\n\t\t\tcase \"seconds\":\n\t\t\tcase \"second\": {\n\t\t\t\treturn variables.jTimeUnit.SECONDS;\n\t\t\t}\n\t\t\tdefault: {\n\t\t\t\tthrow(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t);\n\t\t\t}\n\t\t}",
+      "position" : {
+        "start" : {
+          "line" : 19,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 55,
+          "column" : 3
+        }
+      },
+      "comments" : [ ],
+      "condition" : {
+        "ASTType" : "BoxDotAccess",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".timeUnit",
+        "position" : {
+          "start" : {
+            "line" : 19,
+            "column" : 20
+          },
+          "end" : {
+            "line" : 19,
+            "column" : 29
+          }
+        },
+        "comments" : [ ],
+        "context" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "arguments",
+          "position" : {
+            "start" : {
+              "line" : 19,
+              "column" : 11
+            },
+            "end" : {
+              "line" : 19,
+              "column" : 20
+            }
+          },
+          "comments" : [ ],
+          "name" : "arguments"
+        },
+        "access" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "timeUnit",
+          "position" : {
+            "start" : {
+              "line" : 19,
+              "column" : 21
+            },
+            "end" : {
+              "line" : 19,
+              "column" : 29
+            }
+          },
+          "comments" : [ ],
+          "name" : "TIMEUNIT"
+        },
+        "safe" : false
+      },
+      "cases" : [ {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"days\":",
+        "position" : {
+          "start" : {
+            "line" : 20,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 20,
+            "column" : 15
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"days\"",
+          "position" : {
+            "start" : {
+              "line" : 20,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 20,
+              "column" : 14
+            }
+          },
+          "comments" : [ ],
+          "value" : "days"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"day\": {\n\t\t\t\treturn variables.jTimeUnit.DAYS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 21,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 23,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"day\"",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 21,
+              "column" : 13
+            }
+          },
+          "comments" : [ ],
+          "value" : "day"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.DAYS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 15
+            },
+            "end" : {
+              "line" : 23,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.DAYS",
+            "position" : {
+              "start" : {
+                "line" : 22,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 22,
+                "column" : 35
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".DAYS",
+              "position" : {
+                "start" : {
+                  "line" : 22,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 22,
+                  "column" : 35
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 22,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 22,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 22,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 22,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 22,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 22,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "DAYS",
+                "position" : {
+                  "start" : {
+                    "line" : 22,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 22,
+                    "column" : 35
+                  }
+                },
+                "comments" : [ ],
+                "name" : "DAYS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"hours\":",
+        "position" : {
+          "start" : {
+            "line" : 24,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 24,
+            "column" : 16
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"hours\"",
+          "position" : {
+            "start" : {
+              "line" : 24,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 24,
+              "column" : 15
+            }
+          },
+          "comments" : [ ],
+          "value" : "hours"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"hour\": {\n\t\t\t\treturn variables.jTimeUnit.HOURS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 25,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 27,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"hour\"",
+          "position" : {
+            "start" : {
+              "line" : 25,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 25,
+              "column" : 14
+            }
+          },
+          "comments" : [ ],
+          "value" : "hour"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.HOURS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 25,
+              "column" : 16
+            },
+            "end" : {
+              "line" : 27,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.HOURS",
+            "position" : {
+              "start" : {
+                "line" : 26,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 26,
+                "column" : 36
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".HOURS",
+              "position" : {
+                "start" : {
+                  "line" : 26,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 26,
+                  "column" : 36
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 26,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 26,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 26,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 26,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 26,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 26,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "HOURS",
+                "position" : {
+                  "start" : {
+                    "line" : 26,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 26,
+                    "column" : 36
+                  }
+                },
+                "comments" : [ ],
+                "name" : "HOURS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"microseconds\":",
+        "position" : {
+          "start" : {
+            "line" : 28,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 28,
+            "column" : 23
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"microseconds\"",
+          "position" : {
+            "start" : {
+              "line" : 28,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 28,
+              "column" : 22
+            }
+          },
+          "comments" : [ ],
+          "value" : "microseconds"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"microsecond\": {\n\t\t\t\treturn variables.jTimeUnit.MICROSECONDS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 29,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 31,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"microsecond\"",
+          "position" : {
+            "start" : {
+              "line" : 29,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 29,
+              "column" : 21
+            }
+          },
+          "comments" : [ ],
+          "value" : "microsecond"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.MICROSECONDS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 29,
+              "column" : 23
+            },
+            "end" : {
+              "line" : 31,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.MICROSECONDS",
+            "position" : {
+              "start" : {
+                "line" : 30,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 30,
+                "column" : 43
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".MICROSECONDS",
+              "position" : {
+                "start" : {
+                  "line" : 30,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 30,
+                  "column" : 43
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 30,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 30,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 30,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 30,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 30,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 30,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "MICROSECONDS",
+                "position" : {
+                  "start" : {
+                    "line" : 30,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 30,
+                    "column" : 43
+                  }
+                },
+                "comments" : [ ],
+                "name" : "MICROSECONDS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"milliseconds\":",
+        "position" : {
+          "start" : {
+            "line" : 32,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 32,
+            "column" : 23
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"milliseconds\"",
+          "position" : {
+            "start" : {
+              "line" : 32,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 32,
+              "column" : 22
+            }
+          },
+          "comments" : [ ],
+          "value" : "milliseconds"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"millisecond\": {\n\t\t\t\treturn variables.jTimeUnit.MILLISECONDS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 33,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 35,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"millisecond\"",
+          "position" : {
+            "start" : {
+              "line" : 33,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 33,
+              "column" : 21
+            }
+          },
+          "comments" : [ ],
+          "value" : "millisecond"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.MILLISECONDS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 33,
+              "column" : 23
+            },
+            "end" : {
+              "line" : 35,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.MILLISECONDS",
+            "position" : {
+              "start" : {
+                "line" : 34,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 34,
+                "column" : 43
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".MILLISECONDS",
+              "position" : {
+                "start" : {
+                  "line" : 34,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 34,
+                  "column" : 43
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 34,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 34,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 34,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 34,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 34,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 34,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "MILLISECONDS",
+                "position" : {
+                  "start" : {
+                    "line" : 34,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 34,
+                    "column" : 43
+                  }
+                },
+                "comments" : [ ],
+                "name" : "MILLISECONDS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"minutes\":",
+        "position" : {
+          "start" : {
+            "line" : 36,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 36,
+            "column" : 18
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"minutes\"",
+          "position" : {
+            "start" : {
+              "line" : 36,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 36,
+              "column" : 17
+            }
+          },
+          "comments" : [ ],
+          "value" : "minutes"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"minute\": {\n\t\t\t\treturn variables.jTimeUnit.MINUTES;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 37,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 39,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"minute\"",
+          "position" : {
+            "start" : {
+              "line" : 37,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 37,
+              "column" : 16
+            }
+          },
+          "comments" : [ ],
+          "value" : "minute"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.MINUTES;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 37,
+              "column" : 18
+            },
+            "end" : {
+              "line" : 39,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.MINUTES",
+            "position" : {
+              "start" : {
+                "line" : 38,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 38,
+                "column" : 38
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".MINUTES",
+              "position" : {
+                "start" : {
+                  "line" : 38,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 38,
+                  "column" : 38
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 38,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 38,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 38,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 38,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 38,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 38,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "MINUTES",
+                "position" : {
+                  "start" : {
+                    "line" : 38,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 38,
+                    "column" : 38
+                  }
+                },
+                "comments" : [ ],
+                "name" : "MINUTES"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"nanoseconds\":",
+        "position" : {
+          "start" : {
+            "line" : 40,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 40,
+            "column" : 22
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"nanoseconds\"",
+          "position" : {
+            "start" : {
+              "line" : 40,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 40,
+              "column" : 21
+            }
+          },
+          "comments" : [ ],
+          "value" : "nanoseconds"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"nanosecond\": {\n\t\t\t\treturn variables.jTimeUnit.NANOSECONDS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 41,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 43,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"nanosecond\"",
+          "position" : {
+            "start" : {
+              "line" : 41,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 41,
+              "column" : 20
+            }
+          },
+          "comments" : [ ],
+          "value" : "nanosecond"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.NANOSECONDS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 41,
+              "column" : 22
+            },
+            "end" : {
+              "line" : 43,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.NANOSECONDS",
+            "position" : {
+              "start" : {
+                "line" : 42,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 42,
+                "column" : 42
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".NANOSECONDS",
+              "position" : {
+                "start" : {
+                  "line" : 42,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 42,
+                  "column" : 42
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 42,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 42,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 42,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 42,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 42,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 42,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "NANOSECONDS",
+                "position" : {
+                  "start" : {
+                    "line" : 42,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 42,
+                    "column" : 42
+                  }
+                },
+                "comments" : [ ],
+                "name" : "NANOSECONDS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"seconds\":",
+        "position" : {
+          "start" : {
+            "line" : 44,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 44,
+            "column" : 18
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"seconds\"",
+          "position" : {
+            "start" : {
+              "line" : 44,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 44,
+              "column" : 17
+            }
+          },
+          "comments" : [ ],
+          "value" : "seconds"
+        },
+        "delimiter" : null,
+        "body" : [ ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "case \"second\": {\n\t\t\t\treturn variables.jTimeUnit.SECONDS;\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 45,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 47,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "\"second\"",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 45,
+              "column" : 16
+            }
+          },
+          "comments" : [ ],
+          "value" : "second"
+        },
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\treturn variables.jTimeUnit.SECONDS;\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 18
+            },
+            "end" : {
+              "line" : 47,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxReturn",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "return variables.jTimeUnit.SECONDS",
+            "position" : {
+              "start" : {
+                "line" : 46,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 46,
+                "column" : 38
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".SECONDS",
+              "position" : {
+                "start" : {
+                  "line" : 46,
+                  "column" : 30
+                },
+                "end" : {
+                  "line" : 46,
+                  "column" : 38
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".jTimeUnit",
+                "position" : {
+                  "start" : {
+                    "line" : 46,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 46,
+                    "column" : 30
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 46,
+                      "column" : 11
+                    },
+                    "end" : {
+                      "line" : 46,
+                      "column" : 20
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "jTimeUnit",
+                  "position" : {
+                    "start" : {
+                      "line" : 46,
+                      "column" : 21
+                    },
+                    "end" : {
+                      "line" : 46,
+                      "column" : 30
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "JTIMEUNIT"
+                },
+                "safe" : false
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "SECONDS",
+                "position" : {
+                  "start" : {
+                    "line" : 46,
+                    "column" : 31
+                  },
+                  "end" : {
+                    "line" : 46,
+                    "column" : 38
+                  }
+                },
+                "comments" : [ ],
+                "name" : "SECONDS"
+              },
+              "safe" : false
+            }
+          } ]
+        } ]
+      }, {
+        "ASTType" : "BoxSwitchCase",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "default: {\n\t\t\t\tthrow(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t);\n\t\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 48,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 54,
+            "column" : 4
+          }
+        },
+        "comments" : [ ],
+        "condition" : null,
+        "delimiter" : null,
+        "body" : [ {
+          "ASTType" : "BoxStatementBlock",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "{\n\t\t\t\tthrow(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t);\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 48,
+              "column" : 12
+            },
+            "end" : {
+              "line" : 54,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "body" : [ {
+            "ASTType" : "BoxExpressionStatement",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "throw(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t)",
+            "position" : {
+              "start" : {
+                "line" : 49,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 53,
+                "column" : 5
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxFunctionInvocation",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "throw(\n\t\t\t\t\ttype    = \"InvalidTimeUnitException\",\n\t\t\t\t\tmessage = \"The timeunit passed (#arguments.timeunit#) is not valid\",\n\t\t\t\t\tdetail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"\n\t\t\t\t)",
+              "position" : {
+                "start" : {
+                  "line" : 49,
+                  "column" : 4
+                },
+                "end" : {
+                  "line" : 53,
+                  "column" : 5
+                }
+              },
+              "comments" : [ ],
+              "name" : "throw",
+              "arguments" : [ {
+                "ASTType" : "BoxArgument",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "type    = \"InvalidTimeUnitException\"",
+                "position" : {
+                  "start" : {
+                    "line" : 50,
+                    "column" : 5
+                  },
+                  "end" : {
+                    "line" : 50,
+                    "column" : 41
+                  }
+                },
+                "comments" : [ ],
+                "name" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "type    = \"InvalidTimeUnitException\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 50,
+                      "column" : 5
+                    },
+                    "end" : {
+                      "line" : 50,
+                      "column" : 41
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "type"
+                },
+                "value" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "\"InvalidTimeUnitException\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 50,
+                      "column" : 15
+                    },
+                    "end" : {
+                      "line" : 50,
+                      "column" : 41
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "InvalidTimeUnitException"
+                }
+              }, {
+                "ASTType" : "BoxArgument",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "message = \"The timeunit passed (#arguments.timeunit#) is not valid\"",
+                "position" : {
+                  "start" : {
+                    "line" : 51,
+                    "column" : 5
+                  },
+                  "end" : {
+                    "line" : 51,
+                    "column" : 72
+                  }
+                },
+                "comments" : [ ],
+                "name" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "message = \"The timeunit passed (#arguments.timeunit#) is not valid\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 51,
+                      "column" : 5
+                    },
+                    "end" : {
+                      "line" : 51,
+                      "column" : 72
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "message"
+                },
+                "value" : {
+                  "ASTType" : "BoxStringInterpolation",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "\"The timeunit passed (#arguments.timeunit#) is not valid\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 51,
+                      "column" : 15
+                    },
+                    "end" : {
+                      "line" : 51,
+                      "column" : 72
+                    }
+                  },
+                  "comments" : [ ],
+                  "values" : [ {
+                    "ASTType" : "BoxStringLiteral",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : "The timeunit passed (",
+                    "position" : {
+                      "start" : {
+                        "line" : 51,
+                        "column" : 16
+                      },
+                      "end" : {
+                        "line" : 51,
+                        "column" : 37
+                      }
+                    },
+                    "comments" : [ ],
+                    "value" : "The timeunit passed ("
+                  }, {
+                    "ASTType" : "BoxDotAccess",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : ".timeunit",
+                    "position" : {
+                      "start" : {
+                        "line" : 51,
+                        "column" : 47
+                      },
+                      "end" : {
+                        "line" : 51,
+                        "column" : 56
+                      }
+                    },
+                    "comments" : [ ],
+                    "context" : {
+                      "ASTType" : "BoxIdentifier",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "arguments",
+                      "position" : {
+                        "start" : {
+                          "line" : 51,
+                          "column" : 38
+                        },
+                        "end" : {
+                          "line" : 51,
+                          "column" : 47
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : "arguments"
+                    },
+                    "access" : {
+                      "ASTType" : "BoxIdentifier",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "timeunit",
+                      "position" : {
+                        "start" : {
+                          "line" : 51,
+                          "column" : 48
+                        },
+                        "end" : {
+                          "line" : 51,
+                          "column" : 56
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : "TIMEUNIT"
+                    },
+                    "safe" : false
+                  }, {
+                    "ASTType" : "BoxStringLiteral",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : ") is not valid",
+                    "position" : {
+                      "start" : {
+                        "line" : 51,
+                        "column" : 57
+                      },
+                      "end" : {
+                        "line" : 51,
+                        "column" : 71
+                      }
+                    },
+                    "comments" : [ ],
+                    "value" : ") is not valid"
+                  } ]
+                }
+              }, {
+                "ASTType" : "BoxArgument",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "detail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"",
+                "position" : {
+                  "start" : {
+                    "line" : 52,
+                    "column" : 5
+                  },
+                  "end" : {
+                    "line" : 52,
+                    "column" : 107
+                  }
+                },
+                "comments" : [ ],
+                "name" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "detail  = \"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 52,
+                      "column" : 5
+                    },
+                    "end" : {
+                      "line" : 52,
+                      "column" : 107
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "detail"
+                },
+                "value" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "\"Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 52,
+                      "column" : 15
+                    },
+                    "end" : {
+                      "line" : 52,
+                      "column" : 107
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "Valid timeunits are days, hours, microseconds, milliseconds, minutes, nanoseconds, seconds"
+                }
+              } ]
+            }
+          } ]
+        } ]
+      } ]
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return The Java time unit class\n",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 38
+          }
+        },
+        "comments" : [ ],
+        "value" : "The Java time unit class"
+      }
+    }, {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "@return The Java time unit class\n",
+      "position" : {
+        "start" : {
+          "line" : 16,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 16,
+          "column" : 38
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "return",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 6
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 12
+          }
+        },
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return The Java time unit class\n",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 38
+          }
+        },
+        "comments" : [ ],
+        "value" : "The Java time unit class"
+      }
+    }, {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+      "position" : {
+        "start" : {
+          "line" : 12,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 12,
+          "column" : 76
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+        "position" : {
+          "start" : {
+            "line" : 12,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 12,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Get the appropriate Java timeunit class according to string conventions",
+        "position" : {
+          "start" : {
+            "line" : 12,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 12,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "value" : "Get the appropriate Java timeunit class according to string conventions"
+      }
+    } ]
+  } ],
+  "annotations" : [ {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "singleton",
+    "position" : {
+      "start" : {
+        "line" : 6,
+        "column" : 10
+      },
+      "end" : {
+        "line" : 6,
+        "column" : 19
+      }
+    },
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "singleton",
+      "position" : {
+        "start" : {
+          "line" : 6,
+          "column" : 10
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 19
+        }
+      },
+      "comments" : [ ],
+      "value" : "singleton"
+    },
+    "value" : null
+  }, {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : null,
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : "accessors"
+    },
+    "value" : {
+      "ASTType" : "BoxBooleanLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : false
+    }
+  }, {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : null,
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : "output"
+    },
+    "value" : {
+      "ASTType" : "BoxBooleanLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : true
+    }
+  } ],
+  "documentation" : [ {
+    "ASTType" : "BoxDocumentationAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+    "position" : {
+      "start" : {
+        "line" : 2,
+        "column" : 3
+      },
+      "end" : {
+        "line" : 4,
+        "column" : 113
+      }
+    },
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 113
+        }
+      },
+      "comments" : [ ],
+      "value" : "hint"
+    },
+    "value" : {
+      "ASTType" : "BoxStringLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "Static class to map ColdFusion strings units to Java units\n * A TimeUnit does not maintain time information,\n * but only helps organize and use time representations that may be maintained separately across various contexts",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 113
+        }
+      },
+      "comments" : [ ],
+      "value" : "Static class to map ColdFusion strings units to Java units A TimeUnit does not maintain time information, but only helps organize and use time representations that may be maintained separately across various contexts"
+    }
+  } ],
+  "properties" : [ ]
+}

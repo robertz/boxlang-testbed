@@ -1,0 +1,14 @@
+{
+    "app":{
+        "cfengine":"boxlang",
+        "engineConfigFile":"boxlang.json"
+    },
+    "JVM":{
+        "javaVersion":"openjdk21_jdk"
+    },
+    "web":{
+        "rewrites":{
+            "enable":"true"
+        }
+    }
+}

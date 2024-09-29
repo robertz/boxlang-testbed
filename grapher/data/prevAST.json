@@ -1,0 +1,4652 @@
+{
+  "ASTType" : "BoxClass",
+  "ASTPackage" : "ortus.boxlang.compiler.ast",
+  "sourceText" : "component accessors=\"true\" {\n\n\t/**\n\t * The native future we model: java.util.concurrent.Future\n\t */\n\tproperty name=\"native\";\n\n\t// Prepare the static time unit class\n\tthis.$timeUnit = new coldbox.system.async.time.TimeUnit();\n\n\t/**\n\t * Build the ColdBox Future with the Java native class\n\t *\n\t * @native The native Future class we are wrapping\n\t */\n\tFutureTask function init( native ){\n\t\tif ( isNull( arguments.native ) ) {\n\t\t\targuments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" );\n\t\t}\n\t\tvariables.native = arguments.native;\n\t\treturn this;\n\t}\n\n\t/**\n\t * If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.\n\t *\n\t * @return true if this task is now cancelled\n\t */\n\tboolean function cancel( boolean mayInterruptIfRunning = true ){\n\t\treturn variables.native.cancel( javacast( \"boolean\", arguments.mayInterruptIfRunning ) );\n\t}\n\n\t/**\n\t * Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.\n\t *\n\t * @timeout      The timeout value to use, defaults to forever\n\t * @timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * @defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * @return The result value\n\t *\n\t * @throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n\t */\n\tany function get(\n\t\tnumeric timeout = 0,\n\t\tstring timeUnit = \"milliseconds\",\n\t\tdefaultValue\n\t){\n\t\t// Do we have a timeout?\n\t\tif ( arguments.timeout != 0 ) {\n\t\t\ttry {\n\t\t\t\tvar results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t);\n\t\t\t} catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}\n\t\t} else {\n\t\t\tvar results = variables.native.get();\n\t\t}\n\n\t\t// If we have results, return them\n\t\tif ( !isNull( local.results ) ) {\n\t\t\treturn local.results;\n\t\t}\n\n\t\t// If we didn't, do we have a default value\n\t\tif ( !isNull( arguments.defaultValue ) ) {\n\t\t\treturn arguments.defaultValue;\n\t\t}\n\t\t// Else return null\n\t}\n\n\t/**\n\t * Returns true if this Future was cancelled before it completed normally.\n\t */\n\tboolean function isCancelled(){\n\t\treturn variables.native.isCancelled();\n\t}\n\n\t/**\n\t * Returns true if completed in any fashion: normally, exceptionally, or via cancellation.\n\t */\n\tboolean function isDone(){\n\t\treturn variables.native.isDone();\n\t}\n\n}",
+  "position" : {
+    "start" : {
+      "line" : 8,
+      "column" : 0
+    },
+    "end" : {
+      "line" : 98,
+      "column" : 1
+    }
+  },
+  "comments" : [ {
+    "ASTType" : "BoxDocComment",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+    "sourceText" : "/**\n * This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute\n *\n * @see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n */",
+    "position" : {
+      "start" : {
+        "line" : 1,
+        "column" : 0
+      },
+      "end" : {
+        "line" : 7,
+        "column" : 3
+      }
+    },
+    "comments" : [ ],
+    "commentText" : "\nThis is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n\nThis is the return of most of the executors when you send runnables to execute\n\n@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+    "annotations" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+      "position" : {
+        "start" : {
+          "line" : 6,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 83
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "see",
+        "position" : {
+          "start" : {
+            "line" : 6,
+            "column" : 4
+          },
+          "end" : {
+            "line" : 6,
+            "column" : 7
+          }
+        },
+        "comments" : [ ],
+        "value" : "see"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+        "position" : {
+          "start" : {
+            "line" : 6,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 6,
+            "column" : 83
+          }
+        },
+        "comments" : [ ],
+        "value" : "https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html"
+      }
+    }, {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 81
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+        "position" : {
+          "start" : {
+            "line" : 2,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 81
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+        "position" : {
+          "start" : {
+            "line" : 2,
+            "column" : 3
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 81
+          }
+        },
+        "comments" : [ ],
+        "value" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\nThis is the return of most of the executors when you send runnables to execute"
+      }
+    } ]
+  } ],
+  "imports" : [ ],
+  "body" : [ {
+    "ASTType" : "BoxExpressionStatement",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "this.$timeUnit = new coldbox.system.async.time.TimeUnit()",
+    "position" : {
+      "start" : {
+        "line" : 16,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 16,
+        "column" : 58
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxSingleLineComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "// Prepare the static time unit class",
+      "position" : {
+        "start" : {
+          "line" : 15,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 15,
+          "column" : 38
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "Prepare the static time unit class"
+    } ],
+    "expression" : {
+      "ASTType" : "BoxAssignment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "this.$timeUnit = new coldbox.system.async.time.TimeUnit()",
+      "position" : {
+        "start" : {
+          "line" : 16,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 16,
+          "column" : 58
+        }
+      },
+      "comments" : [ ],
+      "modifiers" : [ ],
+      "left" : {
+        "ASTType" : "BoxDotAccess",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".$timeUnit",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 15
+          }
+        },
+        "comments" : [ ],
+        "context" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "this",
+          "position" : {
+            "start" : {
+              "line" : 16,
+              "column" : 1
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "name" : "this"
+        },
+        "access" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "$timeUnit",
+          "position" : {
+            "start" : {
+              "line" : 16,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 15
+            }
+          },
+          "comments" : [ ],
+          "name" : "$TIMEUNIT"
+        },
+        "safe" : false
+      },
+      "op" : {
+        "ASTType" : "BoxAssignment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Equal"
+      },
+      "right" : {
+        "ASTType" : "BoxNew",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "new coldbox.system.async.time.TimeUnit()",
+        "position" : {
+          "start" : {
+            "line" : 16,
+            "column" : 18
+          },
+          "end" : {
+            "line" : 16,
+            "column" : 58
+          }
+        },
+        "comments" : [ ],
+        "prefix" : null,
+        "expression" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "coldbox.system.async.time.TimeUnit",
+          "position" : {
+            "start" : {
+              "line" : 16,
+              "column" : 22
+            },
+            "end" : {
+              "line" : 16,
+              "column" : 56
+            }
+          },
+          "comments" : [ ],
+          "value" : "coldbox.system.async.time.TimeUnit"
+        },
+        "arguments" : [ ]
+      }
+    }
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "FutureTask function init( native ){\n\t\tif ( isNull( arguments.native ) ) {\n\t\t\targuments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" );\n\t\t}\n\t\tvariables.native = arguments.native;\n\t\treturn this;\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 23,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 29,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * Build the ColdBox Future with the Java native class\n\t *\n\t * @native The native Future class we are wrapping\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 18,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 22,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nBuild the ColdBox Future with the Java native class\n\n@native The native Future class we are wrapping\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@native The native Future class we are wrapping\n",
+        "position" : {
+          "start" : {
+            "line" : 21,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 21,
+            "column" : 53
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "native",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 21,
+              "column" : 12
+            }
+          },
+          "comments" : [ ],
+          "value" : "native"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@native The native Future class we are wrapping\n",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 21,
+              "column" : 53
+            }
+          },
+          "comments" : [ ],
+          "value" : "The native Future class we are wrapping"
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Build the ColdBox Future with the Java native class",
+        "position" : {
+          "start" : {
+            "line" : 19,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 19,
+            "column" : 56
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Build the ColdBox Future with the Java native class",
+          "position" : {
+            "start" : {
+              "line" : 19,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 19,
+              "column" : 56
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Build the ColdBox Future with the Java native class",
+          "position" : {
+            "start" : {
+              "line" : 19,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 19,
+              "column" : 56
+            }
+          },
+          "comments" : [ ],
+          "value" : "Build the ColdBox Future with the Java native class"
+        }
+      } ]
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : {
+      "ASTType" : "BoxReturnType",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "FutureTask",
+      "position" : {
+        "start" : {
+          "line" : 23,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 23,
+          "column" : 11
+        }
+      },
+      "comments" : [ ],
+      "type" : {
+        "ASTType" : "BoxReturnType",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Fqn"
+      },
+      "fqn" : "FutureTask"
+    },
+    "name" : "init",
+    "args" : [ {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "native",
+      "position" : {
+        "start" : {
+          "line" : 23,
+          "column" : 27
+        },
+        "end" : {
+          "line" : 23,
+          "column" : 33
+        }
+      },
+      "comments" : [ ],
+      "name" : "native",
+      "value" : null,
+      "required" : false,
+      "type" : "Any",
+      "annotations" : [ ],
+      "documentation" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@native The native Future class we are wrapping\n",
+        "position" : {
+          "start" : {
+            "line" : 21,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 21,
+            "column" : 53
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@native The native Future class we are wrapping\n",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 21,
+              "column" : 53
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@native The native Future class we are wrapping\n",
+          "position" : {
+            "start" : {
+              "line" : 21,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 21,
+              "column" : 53
+            }
+          },
+          "comments" : [ ],
+          "value" : "The native Future class we are wrapping"
+        }
+      } ]
+    } ],
+    "body" : [ {
+      "ASTType" : "BoxIfElse",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "if ( isNull( arguments.native ) ) {\n\t\t\targuments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" );\n\t\t}",
+      "position" : {
+        "start" : {
+          "line" : 24,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 26,
+          "column" : 3
+        }
+      },
+      "comments" : [ ],
+      "condition" : {
+        "ASTType" : "BoxFunctionInvocation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "isNull( arguments.native )",
+        "position" : {
+          "start" : {
+            "line" : 24,
+            "column" : 7
+          },
+          "end" : {
+            "line" : 24,
+            "column" : 33
+          }
+        },
+        "comments" : [ ],
+        "name" : "isNull",
+        "arguments" : [ {
+          "ASTType" : "BoxArgument",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "arguments.native",
+          "position" : {
+            "start" : {
+              "line" : 24,
+              "column" : 15
+            },
+            "end" : {
+              "line" : 24,
+              "column" : 31
+            }
+          },
+          "comments" : [ ],
+          "name" : null,
+          "value" : {
+            "ASTType" : "BoxDotAccess",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : ".native",
+            "position" : {
+              "start" : {
+                "line" : 24,
+                "column" : 24
+              },
+              "end" : {
+                "line" : 24,
+                "column" : 31
+              }
+            },
+            "comments" : [ ],
+            "context" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "arguments",
+              "position" : {
+                "start" : {
+                  "line" : 24,
+                  "column" : 15
+                },
+                "end" : {
+                  "line" : 24,
+                  "column" : 24
+                }
+              },
+              "comments" : [ ],
+              "name" : "arguments"
+            },
+            "access" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "native",
+              "position" : {
+                "start" : {
+                  "line" : 24,
+                  "column" : 25
+                },
+                "end" : {
+                  "line" : 24,
+                  "column" : 31
+                }
+              },
+              "comments" : [ ],
+              "name" : "NATIVE"
+            },
+            "safe" : false
+          }
+        } ]
+      },
+      "thenBody" : {
+        "ASTType" : "BoxStatementBlock",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "{\n\t\t\targuments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" );\n\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 24,
+            "column" : 36
+          },
+          "end" : {
+            "line" : 26,
+            "column" : 3
+          }
+        },
+        "comments" : [ ],
+        "body" : [ {
+          "ASTType" : "BoxExpressionStatement",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "arguments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" )",
+          "position" : {
+            "start" : {
+              "line" : 25,
+              "column" : 3
+            },
+            "end" : {
+              "line" : 25,
+              "column" : 79
+            }
+          },
+          "comments" : [ ],
+          "expression" : {
+            "ASTType" : "BoxAssignment",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "arguments.native = createObject( \"java\", \"java.util.concurrent.FutureTask\" )",
+            "position" : {
+              "start" : {
+                "line" : 25,
+                "column" : 3
+              },
+              "end" : {
+                "line" : 25,
+                "column" : 79
+              }
+            },
+            "comments" : [ ],
+            "modifiers" : [ ],
+            "left" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".native",
+              "position" : {
+                "start" : {
+                  "line" : 25,
+                  "column" : 12
+                },
+                "end" : {
+                  "line" : 25,
+                  "column" : 19
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "arguments",
+                "position" : {
+                  "start" : {
+                    "line" : 25,
+                    "column" : 3
+                  },
+                  "end" : {
+                    "line" : 25,
+                    "column" : 12
+                  }
+                },
+                "comments" : [ ],
+                "name" : "arguments"
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "native",
+                "position" : {
+                  "start" : {
+                    "line" : 25,
+                    "column" : 13
+                  },
+                  "end" : {
+                    "line" : 25,
+                    "column" : 19
+                  }
+                },
+                "comments" : [ ],
+                "name" : "NATIVE"
+              },
+              "safe" : false
+            },
+            "op" : {
+              "ASTType" : "BoxAssignment",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "Equal"
+            },
+            "right" : {
+              "ASTType" : "BoxFunctionInvocation",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "createObject( \"java\", \"java.util.concurrent.FutureTask\" )",
+              "position" : {
+                "start" : {
+                  "line" : 25,
+                  "column" : 22
+                },
+                "end" : {
+                  "line" : 25,
+                  "column" : 79
+                }
+              },
+              "comments" : [ ],
+              "name" : "createObject",
+              "arguments" : [ {
+                "ASTType" : "BoxArgument",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "\"java\"",
+                "position" : {
+                  "start" : {
+                    "line" : 25,
+                    "column" : 36
+                  },
+                  "end" : {
+                    "line" : 25,
+                    "column" : 42
+                  }
+                },
+                "comments" : [ ],
+                "name" : null,
+                "value" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "\"java\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 25,
+                      "column" : 36
+                    },
+                    "end" : {
+                      "line" : 25,
+                      "column" : 42
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "java"
+                }
+              }, {
+                "ASTType" : "BoxArgument",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "\"java.util.concurrent.FutureTask\"",
+                "position" : {
+                  "start" : {
+                    "line" : 25,
+                    "column" : 44
+                  },
+                  "end" : {
+                    "line" : 25,
+                    "column" : 77
+                  }
+                },
+                "comments" : [ ],
+                "name" : null,
+                "value" : {
+                  "ASTType" : "BoxStringLiteral",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "\"java.util.concurrent.FutureTask\"",
+                  "position" : {
+                    "start" : {
+                      "line" : 25,
+                      "column" : 44
+                    },
+                    "end" : {
+                      "line" : 25,
+                      "column" : 77
+                    }
+                  },
+                  "comments" : [ ],
+                  "value" : "java.util.concurrent.FutureTask"
+                }
+              } ]
+            }
+          }
+        } ]
+      },
+      "elseBody" : null
+    }, {
+      "ASTType" : "BoxExpressionStatement",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "variables.native = arguments.native",
+      "position" : {
+        "start" : {
+          "line" : 27,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 27,
+          "column" : 37
+        }
+      },
+      "comments" : [ ],
+      "expression" : {
+        "ASTType" : "BoxAssignment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "variables.native = arguments.native",
+        "position" : {
+          "start" : {
+            "line" : 27,
+            "column" : 2
+          },
+          "end" : {
+            "line" : 27,
+            "column" : 37
+          }
+        },
+        "comments" : [ ],
+        "modifiers" : [ ],
+        "left" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".native",
+          "position" : {
+            "start" : {
+              "line" : 27,
+              "column" : 11
+            },
+            "end" : {
+              "line" : 27,
+              "column" : 18
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxScope",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "variables",
+            "position" : {
+              "start" : {
+                "line" : 27,
+                "column" : 2
+              },
+              "end" : {
+                "line" : 27,
+                "column" : 11
+              }
+            },
+            "comments" : [ ],
+            "name" : "variables"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "native",
+            "position" : {
+              "start" : {
+                "line" : 27,
+                "column" : 12
+              },
+              "end" : {
+                "line" : 27,
+                "column" : 18
+              }
+            },
+            "comments" : [ ],
+            "name" : "NATIVE"
+          },
+          "safe" : false
+        },
+        "op" : {
+          "ASTType" : "BoxAssignment",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Equal"
+        },
+        "right" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".native",
+          "position" : {
+            "start" : {
+              "line" : 27,
+              "column" : 30
+            },
+            "end" : {
+              "line" : 27,
+              "column" : 37
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "arguments",
+            "position" : {
+              "start" : {
+                "line" : 27,
+                "column" : 21
+              },
+              "end" : {
+                "line" : 27,
+                "column" : 30
+              }
+            },
+            "comments" : [ ],
+            "name" : "arguments"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "native",
+            "position" : {
+              "start" : {
+                "line" : 27,
+                "column" : 31
+              },
+              "end" : {
+                "line" : 27,
+                "column" : 37
+              }
+            },
+            "comments" : [ ],
+            "name" : "NATIVE"
+          },
+          "safe" : false
+        }
+      }
+    }, {
+      "ASTType" : "BoxReturn",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "return this",
+      "position" : {
+        "start" : {
+          "line" : 28,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 28,
+          "column" : 13
+        }
+      },
+      "comments" : [ ],
+      "expression" : {
+        "ASTType" : "BoxIdentifier",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "this",
+        "position" : {
+          "start" : {
+            "line" : 28,
+            "column" : 9
+          },
+          "end" : {
+            "line" : 28,
+            "column" : 13
+          }
+        },
+        "comments" : [ ],
+        "name" : "this"
+      }
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Build the ColdBox Future with the Java native class",
+      "position" : {
+        "start" : {
+          "line" : 19,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 19,
+          "column" : 56
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Build the ColdBox Future with the Java native class",
+        "position" : {
+          "start" : {
+            "line" : 19,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 19,
+            "column" : 56
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Build the ColdBox Future with the Java native class",
+        "position" : {
+          "start" : {
+            "line" : 19,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 19,
+            "column" : 56
+          }
+        },
+        "comments" : [ ],
+        "value" : "Build the ColdBox Future with the Java native class"
+      }
+    } ]
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "boolean function cancel( boolean mayInterruptIfRunning = true ){\n\t\treturn variables.native.cancel( javacast( \"boolean\", arguments.mayInterruptIfRunning ) );\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 37,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 39,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.\n\t *\n\t * @return true if this task is now cancelled\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 31,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 36,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nIf not already completed, completes this Future with a CancellationException.\nDependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.\n\n@return true if this task is now cancelled\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@return true if this task is now cancelled\n",
+        "position" : {
+          "start" : {
+            "line" : 35,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 35,
+            "column" : 48
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "return",
+          "position" : {
+            "start" : {
+              "line" : 35,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 35,
+              "column" : 12
+            }
+          },
+          "comments" : [ ],
+          "value" : "return"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@return true if this task is now cancelled\n",
+          "position" : {
+            "start" : {
+              "line" : 35,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 35,
+              "column" : 48
+            }
+          },
+          "comments" : [ ],
+          "value" : "true if this task is now cancelled"
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+        "position" : {
+          "start" : {
+            "line" : 32,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 33,
+            "column" : 153
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+          "position" : {
+            "start" : {
+              "line" : 32,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 33,
+              "column" : 153
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+          "position" : {
+            "start" : {
+              "line" : 32,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 33,
+              "column" : 153
+            }
+          },
+          "comments" : [ ],
+          "value" : "If not already completed, completes this Future with a CancellationException. Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException."
+        }
+      } ]
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : {
+      "ASTType" : "BoxReturnType",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "boolean",
+      "position" : {
+        "start" : {
+          "line" : 37,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 37,
+          "column" : 8
+        }
+      },
+      "comments" : [ ],
+      "type" : {
+        "ASTType" : "BoxReturnType",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Boolean"
+      },
+      "fqn" : null
+    },
+    "name" : "cancel",
+    "args" : [ {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "boolean mayInterruptIfRunning = true",
+      "position" : {
+        "start" : {
+          "line" : 37,
+          "column" : 26
+        },
+        "end" : {
+          "line" : 37,
+          "column" : 62
+        }
+      },
+      "comments" : [ ],
+      "name" : "mayInterruptIfRunning",
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "true",
+        "position" : {
+          "start" : {
+            "line" : 37,
+            "column" : 58
+          },
+          "end" : {
+            "line" : 37,
+            "column" : 62
+          }
+        },
+        "comments" : [ ],
+        "value" : true
+      },
+      "required" : false,
+      "type" : "boolean",
+      "annotations" : [ ],
+      "documentation" : [ ]
+    } ],
+    "body" : [ {
+      "ASTType" : "BoxReturn",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "return variables.native.cancel( javacast( \"boolean\", arguments.mayInterruptIfRunning ) )",
+      "position" : {
+        "start" : {
+          "line" : 38,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 38,
+          "column" : 90
+        }
+      },
+      "comments" : [ ],
+      "expression" : {
+        "ASTType" : "BoxMethodInvocation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".cancel( javacast( \"boolean\", arguments.mayInterruptIfRunning ) )",
+        "position" : {
+          "start" : {
+            "line" : 38,
+            "column" : 25
+          },
+          "end" : {
+            "line" : 38,
+            "column" : 90
+          }
+        },
+        "comments" : [ ],
+        "obj" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".native",
+          "position" : {
+            "start" : {
+              "line" : 38,
+              "column" : 18
+            },
+            "end" : {
+              "line" : 38,
+              "column" : 25
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxScope",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "variables",
+            "position" : {
+              "start" : {
+                "line" : 38,
+                "column" : 9
+              },
+              "end" : {
+                "line" : 38,
+                "column" : 18
+              }
+            },
+            "comments" : [ ],
+            "name" : "variables"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "native",
+            "position" : {
+              "start" : {
+                "line" : 38,
+                "column" : 19
+              },
+              "end" : {
+                "line" : 38,
+                "column" : 25
+              }
+            },
+            "comments" : [ ],
+            "name" : "NATIVE"
+          },
+          "safe" : false
+        },
+        "name" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "cancel",
+          "position" : {
+            "start" : {
+              "line" : 38,
+              "column" : 26
+            },
+            "end" : {
+              "line" : 38,
+              "column" : 32
+            }
+          },
+          "comments" : [ ],
+          "name" : "cancel"
+        },
+        "arguments" : [ {
+          "ASTType" : "BoxArgument",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "javacast( \"boolean\", arguments.mayInterruptIfRunning )",
+          "position" : {
+            "start" : {
+              "line" : 38,
+              "column" : 34
+            },
+            "end" : {
+              "line" : 38,
+              "column" : 88
+            }
+          },
+          "comments" : [ ],
+          "name" : null,
+          "value" : {
+            "ASTType" : "BoxFunctionInvocation",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "javacast( \"boolean\", arguments.mayInterruptIfRunning )",
+            "position" : {
+              "start" : {
+                "line" : 38,
+                "column" : 34
+              },
+              "end" : {
+                "line" : 38,
+                "column" : 88
+              }
+            },
+            "comments" : [ ],
+            "name" : "javacast",
+            "arguments" : [ {
+              "ASTType" : "BoxArgument",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "\"boolean\"",
+              "position" : {
+                "start" : {
+                  "line" : 38,
+                  "column" : 44
+                },
+                "end" : {
+                  "line" : 38,
+                  "column" : 53
+                }
+              },
+              "comments" : [ ],
+              "name" : null,
+              "value" : {
+                "ASTType" : "BoxStringLiteral",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "\"boolean\"",
+                "position" : {
+                  "start" : {
+                    "line" : 38,
+                    "column" : 44
+                  },
+                  "end" : {
+                    "line" : 38,
+                    "column" : 53
+                  }
+                },
+                "comments" : [ ],
+                "value" : "boolean"
+              }
+            }, {
+              "ASTType" : "BoxArgument",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "arguments.mayInterruptIfRunning",
+              "position" : {
+                "start" : {
+                  "line" : 38,
+                  "column" : 55
+                },
+                "end" : {
+                  "line" : 38,
+                  "column" : 86
+                }
+              },
+              "comments" : [ ],
+              "name" : null,
+              "value" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".mayInterruptIfRunning",
+                "position" : {
+                  "start" : {
+                    "line" : 38,
+                    "column" : 64
+                  },
+                  "end" : {
+                    "line" : 38,
+                    "column" : 86
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "arguments",
+                  "position" : {
+                    "start" : {
+                      "line" : 38,
+                      "column" : 55
+                    },
+                    "end" : {
+                      "line" : 38,
+                      "column" : 64
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "arguments"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "mayInterruptIfRunning",
+                  "position" : {
+                    "start" : {
+                      "line" : 38,
+                      "column" : 65
+                    },
+                    "end" : {
+                      "line" : 38,
+                      "column" : 86
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "MAYINTERRUPTIFRUNNING"
+                },
+                "safe" : false
+              }
+            } ]
+          }
+        } ],
+        "safe" : false
+      }
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return true if this task is now cancelled\n",
+        "position" : {
+          "start" : {
+            "line" : 35,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 35,
+            "column" : 48
+          }
+        },
+        "comments" : [ ],
+        "value" : "true if this task is now cancelled"
+      }
+    }, {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "@return true if this task is now cancelled\n",
+      "position" : {
+        "start" : {
+          "line" : 35,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 35,
+          "column" : 48
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "return",
+        "position" : {
+          "start" : {
+            "line" : 35,
+            "column" : 6
+          },
+          "end" : {
+            "line" : 35,
+            "column" : 12
+          }
+        },
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return true if this task is now cancelled\n",
+        "position" : {
+          "start" : {
+            "line" : 35,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 35,
+            "column" : 48
+          }
+        },
+        "comments" : [ ],
+        "value" : "true if this task is now cancelled"
+      }
+    }, {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+      "position" : {
+        "start" : {
+          "line" : 32,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 33,
+          "column" : 153
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+        "position" : {
+          "start" : {
+            "line" : 32,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 33,
+            "column" : 153
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "If not already completed, completes this Future with a CancellationException.\n\t * Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException.",
+        "position" : {
+          "start" : {
+            "line" : 32,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 33,
+            "column" : 153
+          }
+        },
+        "comments" : [ ],
+        "value" : "If not already completed, completes this Future with a CancellationException. Dependent Futures that have not already completed will also complete exceptionally, with a CompletionException caused by this CancellationException."
+      }
+    } ]
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "any function get(\n\t\tnumeric timeout = 0,\n\t\tstring timeUnit = \"milliseconds\",\n\t\tdefaultValue\n\t){\n\t\t// Do we have a timeout?\n\t\tif ( arguments.timeout != 0 ) {\n\t\t\ttry {\n\t\t\t\tvar results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t);\n\t\t\t} catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}\n\t\t} else {\n\t\t\tvar results = variables.native.get();\n\t\t}\n\n\t\t// If we have results, return them\n\t\tif ( !isNull( local.results ) ) {\n\t\t\treturn local.results;\n\t\t}\n\n\t\t// If we didn't, do we have a default value\n\t\tif ( !isNull( arguments.defaultValue ) ) {\n\t\t\treturn arguments.defaultValue;\n\t\t}\n\t\t// Else return null\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 53,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 82,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.\n\t *\n\t * @timeout      The timeout value to use, defaults to forever\n\t * @timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * @defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * @return The result value\n\t *\n\t * @throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 41,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 52,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nWaits if necessary for at most the given time for this future to complete, and then returns its result, if available.\nIf the result is null, then you can pass the defaultValue argument to return it.\n\n@timeout      The timeout value to use, defaults to forever\n@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n@defaultValue If the Future did not produce a value, then it will return this default value.\n\n@return The result value\n\n@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeout      The timeout value to use, defaults to forever\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 45,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 46,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "timeout",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 45,
+              "column" : 13
+            }
+          },
+          "comments" : [ ],
+          "value" : "timeout"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeout      The timeout value to use, defaults to forever\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 46,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The timeout value to use, defaults to forever "
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 46,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 47,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "timeUnit",
+          "position" : {
+            "start" : {
+              "line" : 46,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 46,
+              "column" : 14
+            }
+          },
+          "comments" : [ ],
+          "value" : "timeUnit"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 46,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 47,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds "
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 47,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 49,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "defaultValue",
+          "position" : {
+            "start" : {
+              "line" : 47,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 47,
+              "column" : 18
+            }
+          },
+          "comments" : [ ],
+          "value" : "defaultValue"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 47,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 49,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "If the Future did not produce a value, then it will return this default value. "
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@return The result value\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 49,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "return",
+          "position" : {
+            "start" : {
+              "line" : 49,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 49,
+              "column" : 12
+            }
+          },
+          "comments" : [ ],
+          "value" : "return"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@return The result value\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 49,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 51,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The result value"
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+        "position" : {
+          "start" : {
+            "line" : 51,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 96
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "throws",
+          "position" : {
+            "start" : {
+              "line" : 51,
+              "column" : 6
+            },
+            "end" : {
+              "line" : 51,
+              "column" : 12
+            }
+          },
+          "comments" : [ ],
+          "value" : "throws"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+          "position" : {
+            "start" : {
+              "line" : 51,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 51,
+              "column" : 96
+            }
+          },
+          "comments" : [ ],
+          "value" : "CancellationException , ExecutionException, InterruptedException, TimeoutException"
+        }
+      }, {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+        "position" : {
+          "start" : {
+            "line" : 42,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 43,
+            "column" : 85
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+          "position" : {
+            "start" : {
+              "line" : 42,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 43,
+              "column" : 85
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+          "position" : {
+            "start" : {
+              "line" : 42,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 43,
+              "column" : 85
+            }
+          },
+          "comments" : [ ],
+          "value" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available. If the result is null, then you can pass the defaultValue argument to return it."
+        }
+      } ]
+    }, {
+      "ASTType" : "BoxSingleLineComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "// Else return null",
+      "position" : {
+        "start" : {
+          "line" : 81,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 81,
+          "column" : 21
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "Else return null"
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : {
+      "ASTType" : "BoxReturnType",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "any",
+      "position" : {
+        "start" : {
+          "line" : 53,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 53,
+          "column" : 4
+        }
+      },
+      "comments" : [ ],
+      "type" : {
+        "ASTType" : "BoxReturnType",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Any"
+      },
+      "fqn" : null
+    },
+    "name" : "get",
+    "args" : [ {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "numeric timeout = 0",
+      "position" : {
+        "start" : {
+          "line" : 54,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 54,
+          "column" : 21
+        }
+      },
+      "comments" : [ ],
+      "name" : "timeout",
+      "value" : {
+        "ASTType" : "BoxIntegerLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "0",
+        "position" : {
+          "start" : {
+            "line" : 54,
+            "column" : 20
+          },
+          "end" : {
+            "line" : 54,
+            "column" : 21
+          }
+        },
+        "comments" : [ ],
+        "value" : "0"
+      },
+      "required" : false,
+      "type" : "numeric",
+      "annotations" : [ ],
+      "documentation" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeout      The timeout value to use, defaults to forever\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 45,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 46,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeout      The timeout value to use, defaults to forever\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 46,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeout      The timeout value to use, defaults to forever\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 45,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 46,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The timeout value to use, defaults to forever "
+        }
+      } ]
+    }, {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "string timeUnit = \"milliseconds\"",
+      "position" : {
+        "start" : {
+          "line" : 55,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 55,
+          "column" : 34
+        }
+      },
+      "comments" : [ ],
+      "name" : "timeUnit",
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "\"milliseconds\"",
+        "position" : {
+          "start" : {
+            "line" : 55,
+            "column" : 20
+          },
+          "end" : {
+            "line" : 55,
+            "column" : 34
+          }
+        },
+        "comments" : [ ],
+        "value" : "milliseconds"
+      },
+      "required" : false,
+      "type" : "string",
+      "annotations" : [ ],
+      "documentation" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 46,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 47,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 46,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 47,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@timeUnit     The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 46,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 47,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "The time unit to use, available units are: days, hours, microseconds, milliseconds, minutes, nanoseconds, and seconds. The default is milliseconds "
+        }
+      } ]
+    }, {
+      "ASTType" : "BoxArgumentDeclaration",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "defaultValue",
+      "position" : {
+        "start" : {
+          "line" : 56,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 56,
+          "column" : 14
+        }
+      },
+      "comments" : [ ],
+      "name" : "defaultValue",
+      "value" : null,
+      "required" : false,
+      "type" : "Any",
+      "annotations" : [ ],
+      "documentation" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "@defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 47,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 49,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 47,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 49,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "@defaultValue If the Future did not produce a value, then it will return this default value.\n\t *\n\t * ",
+          "position" : {
+            "start" : {
+              "line" : 47,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 49,
+              "column" : 5
+            }
+          },
+          "comments" : [ ],
+          "value" : "If the Future did not produce a value, then it will return this default value. "
+        }
+      } ]
+    } ],
+    "body" : [ {
+      "ASTType" : "BoxIfElse",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "if ( arguments.timeout != 0 ) {\n\t\t\ttry {\n\t\t\t\tvar results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t);\n\t\t\t} catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}\n\t\t} else {\n\t\t\tvar results = variables.native.get();\n\t\t}",
+      "position" : {
+        "start" : {
+          "line" : 59,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 70,
+          "column" : 3
+        }
+      },
+      "comments" : [ {
+        "ASTType" : "BoxSingleLineComment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+        "sourceText" : "// Do we have a timeout?",
+        "position" : {
+          "start" : {
+            "line" : 58,
+            "column" : 2
+          },
+          "end" : {
+            "line" : 58,
+            "column" : 26
+          }
+        },
+        "comments" : [ ],
+        "commentText" : "Do we have a timeout?"
+      } ],
+      "condition" : {
+        "ASTType" : "BoxComparisonOperation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "arguments.timeout != 0",
+        "position" : {
+          "start" : {
+            "line" : 59,
+            "column" : 7
+          },
+          "end" : {
+            "line" : 59,
+            "column" : 29
+          }
+        },
+        "comments" : [ ],
+        "left" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".timeout",
+          "position" : {
+            "start" : {
+              "line" : 59,
+              "column" : 16
+            },
+            "end" : {
+              "line" : 59,
+              "column" : 24
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "arguments",
+            "position" : {
+              "start" : {
+                "line" : 59,
+                "column" : 7
+              },
+              "end" : {
+                "line" : 59,
+                "column" : 16
+              }
+            },
+            "comments" : [ ],
+            "name" : "arguments"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "timeout",
+            "position" : {
+              "start" : {
+                "line" : 59,
+                "column" : 17
+              },
+              "end" : {
+                "line" : 59,
+                "column" : 24
+              }
+            },
+            "comments" : [ ],
+            "name" : "TIMEOUT"
+          },
+          "safe" : false
+        },
+        "operator" : {
+          "ASTType" : "BoxComparisonOperation",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "NotEqual"
+        },
+        "right" : {
+          "ASTType" : "BoxIntegerLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "0",
+          "position" : {
+            "start" : {
+              "line" : 59,
+              "column" : 28
+            },
+            "end" : {
+              "line" : 59,
+              "column" : 29
+            }
+          },
+          "comments" : [ ],
+          "value" : "0"
+        }
+      },
+      "thenBody" : {
+        "ASTType" : "BoxStatementBlock",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "{\n\t\t\ttry {\n\t\t\t\tvar results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t);\n\t\t\t} catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}\n\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 59,
+            "column" : 32
+          },
+          "end" : {
+            "line" : 68,
+            "column" : 3
+          }
+        },
+        "comments" : [ ],
+        "body" : [ {
+          "ASTType" : "BoxTry",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "try {\n\t\t\t\tvar results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t);\n\t\t\t} catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}",
+          "position" : {
+            "start" : {
+              "line" : 60,
+              "column" : 3
+            },
+            "end" : {
+              "line" : 67,
+              "column" : 4
+            }
+          },
+          "comments" : [ ],
+          "tryBody" : [ {
+            "ASTType" : "BoxExpressionStatement",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "var results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t)",
+            "position" : {
+              "start" : {
+                "line" : 61,
+                "column" : 4
+              },
+              "end" : {
+                "line" : 64,
+                "column" : 5
+              }
+            },
+            "comments" : [ ],
+            "expression" : {
+              "ASTType" : "BoxAssignment",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "results = variables.native.get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t)",
+              "position" : {
+                "start" : {
+                  "line" : 61,
+                  "column" : 8
+                },
+                "end" : {
+                  "line" : 64,
+                  "column" : 5
+                }
+              },
+              "comments" : [ ],
+              "modifiers" : [ {
+                "ASTType" : "BoxAssignment",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "VAR"
+              } ],
+              "left" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "results",
+                "position" : {
+                  "start" : {
+                    "line" : 61,
+                    "column" : 8
+                  },
+                  "end" : {
+                    "line" : 61,
+                    "column" : 15
+                  }
+                },
+                "comments" : [ ],
+                "name" : "results"
+              },
+              "op" : {
+                "ASTType" : "BoxAssignment",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "Equal"
+              },
+              "right" : {
+                "ASTType" : "BoxMethodInvocation",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".get(\n\t\t\t\t\tjavacast( \"long\", arguments.timeout ),\n\t\t\t\t\tthis.$timeUnit.get( arguments.timeUnit )\n\t\t\t\t)",
+                "position" : {
+                  "start" : {
+                    "line" : 61,
+                    "column" : 34
+                  },
+                  "end" : {
+                    "line" : 64,
+                    "column" : 5
+                  }
+                },
+                "comments" : [ ],
+                "obj" : {
+                  "ASTType" : "BoxDotAccess",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : ".native",
+                  "position" : {
+                    "start" : {
+                      "line" : 61,
+                      "column" : 27
+                    },
+                    "end" : {
+                      "line" : 61,
+                      "column" : 34
+                    }
+                  },
+                  "comments" : [ ],
+                  "context" : {
+                    "ASTType" : "BoxScope",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : "variables",
+                    "position" : {
+                      "start" : {
+                        "line" : 61,
+                        "column" : 18
+                      },
+                      "end" : {
+                        "line" : 61,
+                        "column" : 27
+                      }
+                    },
+                    "comments" : [ ],
+                    "name" : "variables"
+                  },
+                  "access" : {
+                    "ASTType" : "BoxIdentifier",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : "native",
+                    "position" : {
+                      "start" : {
+                        "line" : 61,
+                        "column" : 28
+                      },
+                      "end" : {
+                        "line" : 61,
+                        "column" : 34
+                      }
+                    },
+                    "comments" : [ ],
+                    "name" : "NATIVE"
+                  },
+                  "safe" : false
+                },
+                "name" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "get",
+                  "position" : {
+                    "start" : {
+                      "line" : 61,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 64,
+                      "column" : 38
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "get"
+                },
+                "arguments" : [ {
+                  "ASTType" : "BoxArgument",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "javacast( \"long\", arguments.timeout )",
+                  "position" : {
+                    "start" : {
+                      "line" : 62,
+                      "column" : 5
+                    },
+                    "end" : {
+                      "line" : 62,
+                      "column" : 42
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : null,
+                  "value" : {
+                    "ASTType" : "BoxFunctionInvocation",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : "javacast( \"long\", arguments.timeout )",
+                    "position" : {
+                      "start" : {
+                        "line" : 62,
+                        "column" : 5
+                      },
+                      "end" : {
+                        "line" : 62,
+                        "column" : 42
+                      }
+                    },
+                    "comments" : [ ],
+                    "name" : "javacast",
+                    "arguments" : [ {
+                      "ASTType" : "BoxArgument",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "\"long\"",
+                      "position" : {
+                        "start" : {
+                          "line" : 62,
+                          "column" : 15
+                        },
+                        "end" : {
+                          "line" : 62,
+                          "column" : 21
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : null,
+                      "value" : {
+                        "ASTType" : "BoxStringLiteral",
+                        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                        "sourceText" : "\"long\"",
+                        "position" : {
+                          "start" : {
+                            "line" : 62,
+                            "column" : 15
+                          },
+                          "end" : {
+                            "line" : 62,
+                            "column" : 21
+                          }
+                        },
+                        "comments" : [ ],
+                        "value" : "long"
+                      }
+                    }, {
+                      "ASTType" : "BoxArgument",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "arguments.timeout",
+                      "position" : {
+                        "start" : {
+                          "line" : 62,
+                          "column" : 23
+                        },
+                        "end" : {
+                          "line" : 62,
+                          "column" : 40
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : null,
+                      "value" : {
+                        "ASTType" : "BoxDotAccess",
+                        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                        "sourceText" : ".timeout",
+                        "position" : {
+                          "start" : {
+                            "line" : 62,
+                            "column" : 32
+                          },
+                          "end" : {
+                            "line" : 62,
+                            "column" : 40
+                          }
+                        },
+                        "comments" : [ ],
+                        "context" : {
+                          "ASTType" : "BoxIdentifier",
+                          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                          "sourceText" : "arguments",
+                          "position" : {
+                            "start" : {
+                              "line" : 62,
+                              "column" : 23
+                            },
+                            "end" : {
+                              "line" : 62,
+                              "column" : 32
+                            }
+                          },
+                          "comments" : [ ],
+                          "name" : "arguments"
+                        },
+                        "access" : {
+                          "ASTType" : "BoxIdentifier",
+                          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                          "sourceText" : "timeout",
+                          "position" : {
+                            "start" : {
+                              "line" : 62,
+                              "column" : 33
+                            },
+                            "end" : {
+                              "line" : 62,
+                              "column" : 40
+                            }
+                          },
+                          "comments" : [ ],
+                          "name" : "TIMEOUT"
+                        },
+                        "safe" : false
+                      }
+                    } ]
+                  }
+                }, {
+                  "ASTType" : "BoxArgument",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "this.$timeUnit.get( arguments.timeUnit )",
+                  "position" : {
+                    "start" : {
+                      "line" : 63,
+                      "column" : 5
+                    },
+                    "end" : {
+                      "line" : 63,
+                      "column" : 45
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : null,
+                  "value" : {
+                    "ASTType" : "BoxMethodInvocation",
+                    "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                    "sourceText" : ".get( arguments.timeUnit )",
+                    "position" : {
+                      "start" : {
+                        "line" : 63,
+                        "column" : 19
+                      },
+                      "end" : {
+                        "line" : 63,
+                        "column" : 45
+                      }
+                    },
+                    "comments" : [ ],
+                    "obj" : {
+                      "ASTType" : "BoxDotAccess",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : ".$timeUnit",
+                      "position" : {
+                        "start" : {
+                          "line" : 63,
+                          "column" : 9
+                        },
+                        "end" : {
+                          "line" : 63,
+                          "column" : 19
+                        }
+                      },
+                      "comments" : [ ],
+                      "context" : {
+                        "ASTType" : "BoxIdentifier",
+                        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                        "sourceText" : "this",
+                        "position" : {
+                          "start" : {
+                            "line" : 63,
+                            "column" : 5
+                          },
+                          "end" : {
+                            "line" : 63,
+                            "column" : 9
+                          }
+                        },
+                        "comments" : [ ],
+                        "name" : "this"
+                      },
+                      "access" : {
+                        "ASTType" : "BoxIdentifier",
+                        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                        "sourceText" : "$timeUnit",
+                        "position" : {
+                          "start" : {
+                            "line" : 63,
+                            "column" : 10
+                          },
+                          "end" : {
+                            "line" : 63,
+                            "column" : 19
+                          }
+                        },
+                        "comments" : [ ],
+                        "name" : "$TIMEUNIT"
+                      },
+                      "safe" : false
+                    },
+                    "name" : {
+                      "ASTType" : "BoxIdentifier",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "get",
+                      "position" : {
+                        "start" : {
+                          "line" : 63,
+                          "column" : 20
+                        },
+                        "end" : {
+                          "line" : 63,
+                          "column" : 23
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : "get"
+                    },
+                    "arguments" : [ {
+                      "ASTType" : "BoxArgument",
+                      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                      "sourceText" : "arguments.timeUnit",
+                      "position" : {
+                        "start" : {
+                          "line" : 63,
+                          "column" : 25
+                        },
+                        "end" : {
+                          "line" : 63,
+                          "column" : 43
+                        }
+                      },
+                      "comments" : [ ],
+                      "name" : null,
+                      "value" : {
+                        "ASTType" : "BoxDotAccess",
+                        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                        "sourceText" : ".timeUnit",
+                        "position" : {
+                          "start" : {
+                            "line" : 63,
+                            "column" : 34
+                          },
+                          "end" : {
+                            "line" : 63,
+                            "column" : 43
+                          }
+                        },
+                        "comments" : [ ],
+                        "context" : {
+                          "ASTType" : "BoxIdentifier",
+                          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                          "sourceText" : "arguments",
+                          "position" : {
+                            "start" : {
+                              "line" : 63,
+                              "column" : 25
+                            },
+                            "end" : {
+                              "line" : 63,
+                              "column" : 34
+                            }
+                          },
+                          "comments" : [ ],
+                          "name" : "arguments"
+                        },
+                        "access" : {
+                          "ASTType" : "BoxIdentifier",
+                          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                          "sourceText" : "timeUnit",
+                          "position" : {
+                            "start" : {
+                              "line" : 63,
+                              "column" : 35
+                            },
+                            "end" : {
+                              "line" : 63,
+                              "column" : 43
+                            }
+                          },
+                          "comments" : [ ],
+                          "name" : "TIMEUNIT"
+                        },
+                        "safe" : false
+                      }
+                    } ],
+                    "safe" : false
+                  }
+                } ],
+                "safe" : false
+              }
+            }
+          } ],
+          "catches" : [ {
+            "ASTType" : "BoxTryCatch",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+            "sourceText" : "catch ( \"java.util.concurrent.TimeoutException\" e ) {\n\t\t\t\t// Empty, because we will return a default value if passed\n\t\t\t}",
+            "position" : {
+              "start" : {
+                "line" : 65,
+                "column" : 5
+              },
+              "end" : {
+                "line" : 67,
+                "column" : 4
+              }
+            },
+            "comments" : [ {
+              "ASTType" : "BoxSingleLineComment",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+              "sourceText" : "// Empty, because we will return a default value if passed",
+              "position" : {
+                "start" : {
+                  "line" : 66,
+                  "column" : 4
+                },
+                "end" : {
+                  "line" : 66,
+                  "column" : 62
+                }
+              },
+              "comments" : [ ],
+              "commentText" : "Empty, because we will return a default value if passed"
+            } ],
+            "exception" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "e",
+              "position" : {
+                "start" : {
+                  "line" : 65,
+                  "column" : 53
+                },
+                "end" : {
+                  "line" : 65,
+                  "column" : 54
+                }
+              },
+              "comments" : [ ],
+              "name" : "e"
+            },
+            "catchBody" : [ ],
+            "catchTypes" : [ {
+              "ASTType" : "BoxStringLiteral",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "\"java.util.concurrent.TimeoutException\"",
+              "position" : {
+                "start" : {
+                  "line" : 65,
+                  "column" : 13
+                },
+                "end" : {
+                  "line" : 65,
+                  "column" : 52
+                }
+              },
+              "comments" : [ ],
+              "value" : "java.util.concurrent.TimeoutException"
+            } ]
+          } ],
+          "finallyBody" : [ ]
+        } ]
+      },
+      "elseBody" : {
+        "ASTType" : "BoxStatementBlock",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "{\n\t\t\tvar results = variables.native.get();\n\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 68,
+            "column" : 9
+          },
+          "end" : {
+            "line" : 70,
+            "column" : 3
+          }
+        },
+        "comments" : [ ],
+        "body" : [ {
+          "ASTType" : "BoxExpressionStatement",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "var results = variables.native.get()",
+          "position" : {
+            "start" : {
+              "line" : 69,
+              "column" : 3
+            },
+            "end" : {
+              "line" : 69,
+              "column" : 39
+            }
+          },
+          "comments" : [ ],
+          "expression" : {
+            "ASTType" : "BoxAssignment",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "results = variables.native.get()",
+            "position" : {
+              "start" : {
+                "line" : 69,
+                "column" : 7
+              },
+              "end" : {
+                "line" : 69,
+                "column" : 39
+              }
+            },
+            "comments" : [ ],
+            "modifiers" : [ {
+              "ASTType" : "BoxAssignment",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "VAR"
+            } ],
+            "left" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "results",
+              "position" : {
+                "start" : {
+                  "line" : 69,
+                  "column" : 7
+                },
+                "end" : {
+                  "line" : 69,
+                  "column" : 14
+                }
+              },
+              "comments" : [ ],
+              "name" : "results"
+            },
+            "op" : {
+              "ASTType" : "BoxAssignment",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "Equal"
+            },
+            "right" : {
+              "ASTType" : "BoxMethodInvocation",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".get()",
+              "position" : {
+                "start" : {
+                  "line" : 69,
+                  "column" : 33
+                },
+                "end" : {
+                  "line" : 69,
+                  "column" : 39
+                }
+              },
+              "comments" : [ ],
+              "obj" : {
+                "ASTType" : "BoxDotAccess",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : ".native",
+                "position" : {
+                  "start" : {
+                    "line" : 69,
+                    "column" : 26
+                  },
+                  "end" : {
+                    "line" : 69,
+                    "column" : 33
+                  }
+                },
+                "comments" : [ ],
+                "context" : {
+                  "ASTType" : "BoxScope",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "variables",
+                  "position" : {
+                    "start" : {
+                      "line" : 69,
+                      "column" : 17
+                    },
+                    "end" : {
+                      "line" : 69,
+                      "column" : 26
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "variables"
+                },
+                "access" : {
+                  "ASTType" : "BoxIdentifier",
+                  "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                  "sourceText" : "native",
+                  "position" : {
+                    "start" : {
+                      "line" : 69,
+                      "column" : 27
+                    },
+                    "end" : {
+                      "line" : 69,
+                      "column" : 33
+                    }
+                  },
+                  "comments" : [ ],
+                  "name" : "NATIVE"
+                },
+                "safe" : false
+              },
+              "name" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "get",
+                "position" : {
+                  "start" : {
+                    "line" : 69,
+                    "column" : 34
+                  },
+                  "end" : {
+                    "line" : 69,
+                    "column" : 37
+                  }
+                },
+                "comments" : [ ],
+                "name" : "get"
+              },
+              "arguments" : [ ],
+              "safe" : false
+            }
+          }
+        } ]
+      }
+    }, {
+      "ASTType" : "BoxIfElse",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "if ( !isNull( local.results ) ) {\n\t\t\treturn local.results;\n\t\t}",
+      "position" : {
+        "start" : {
+          "line" : 73,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 75,
+          "column" : 3
+        }
+      },
+      "comments" : [ {
+        "ASTType" : "BoxSingleLineComment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+        "sourceText" : "// If we have results, return them",
+        "position" : {
+          "start" : {
+            "line" : 72,
+            "column" : 2
+          },
+          "end" : {
+            "line" : 72,
+            "column" : 36
+          }
+        },
+        "comments" : [ ],
+        "commentText" : "If we have results, return them"
+      } ],
+      "condition" : {
+        "ASTType" : "BoxUnaryOperation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "!isNull( local.results )",
+        "position" : {
+          "start" : {
+            "line" : 73,
+            "column" : 7
+          },
+          "end" : {
+            "line" : 73,
+            "column" : 31
+          }
+        },
+        "comments" : [ ],
+        "expr" : {
+          "ASTType" : "BoxFunctionInvocation",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "isNull( local.results )",
+          "position" : {
+            "start" : {
+              "line" : 73,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 73,
+              "column" : 31
+            }
+          },
+          "comments" : [ ],
+          "name" : "isNull",
+          "arguments" : [ {
+            "ASTType" : "BoxArgument",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "local.results",
+            "position" : {
+              "start" : {
+                "line" : 73,
+                "column" : 16
+              },
+              "end" : {
+                "line" : 73,
+                "column" : 29
+              }
+            },
+            "comments" : [ ],
+            "name" : null,
+            "value" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".results",
+              "position" : {
+                "start" : {
+                  "line" : 73,
+                  "column" : 21
+                },
+                "end" : {
+                  "line" : 73,
+                  "column" : 29
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "local",
+                "position" : {
+                  "start" : {
+                    "line" : 73,
+                    "column" : 16
+                  },
+                  "end" : {
+                    "line" : 73,
+                    "column" : 21
+                  }
+                },
+                "comments" : [ ],
+                "name" : "local"
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "results",
+                "position" : {
+                  "start" : {
+                    "line" : 73,
+                    "column" : 22
+                  },
+                  "end" : {
+                    "line" : 73,
+                    "column" : 29
+                  }
+                },
+                "comments" : [ ],
+                "name" : "RESULTS"
+              },
+              "safe" : false
+            }
+          } ]
+        },
+        "operator" : {
+          "ASTType" : "BoxUnaryOperation",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Not"
+        }
+      },
+      "thenBody" : {
+        "ASTType" : "BoxStatementBlock",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "{\n\t\t\treturn local.results;\n\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 73,
+            "column" : 34
+          },
+          "end" : {
+            "line" : 75,
+            "column" : 3
+          }
+        },
+        "comments" : [ ],
+        "body" : [ {
+          "ASTType" : "BoxReturn",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "return local.results",
+          "position" : {
+            "start" : {
+              "line" : 74,
+              "column" : 3
+            },
+            "end" : {
+              "line" : 74,
+              "column" : 23
+            }
+          },
+          "comments" : [ ],
+          "expression" : {
+            "ASTType" : "BoxDotAccess",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : ".results",
+            "position" : {
+              "start" : {
+                "line" : 74,
+                "column" : 15
+              },
+              "end" : {
+                "line" : 74,
+                "column" : 23
+              }
+            },
+            "comments" : [ ],
+            "context" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "local",
+              "position" : {
+                "start" : {
+                  "line" : 74,
+                  "column" : 10
+                },
+                "end" : {
+                  "line" : 74,
+                  "column" : 15
+                }
+              },
+              "comments" : [ ],
+              "name" : "local"
+            },
+            "access" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "results",
+              "position" : {
+                "start" : {
+                  "line" : 74,
+                  "column" : 16
+                },
+                "end" : {
+                  "line" : 74,
+                  "column" : 23
+                }
+              },
+              "comments" : [ ],
+              "name" : "RESULTS"
+            },
+            "safe" : false
+          }
+        } ]
+      },
+      "elseBody" : null
+    }, {
+      "ASTType" : "BoxIfElse",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "if ( !isNull( arguments.defaultValue ) ) {\n\t\t\treturn arguments.defaultValue;\n\t\t}",
+      "position" : {
+        "start" : {
+          "line" : 78,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 80,
+          "column" : 3
+        }
+      },
+      "comments" : [ {
+        "ASTType" : "BoxSingleLineComment",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+        "sourceText" : "// If we didn't, do we have a default value",
+        "position" : {
+          "start" : {
+            "line" : 77,
+            "column" : 2
+          },
+          "end" : {
+            "line" : 77,
+            "column" : 45
+          }
+        },
+        "comments" : [ ],
+        "commentText" : "If we didn't, do we have a default value"
+      } ],
+      "condition" : {
+        "ASTType" : "BoxUnaryOperation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "!isNull( arguments.defaultValue )",
+        "position" : {
+          "start" : {
+            "line" : 78,
+            "column" : 7
+          },
+          "end" : {
+            "line" : 78,
+            "column" : 40
+          }
+        },
+        "comments" : [ ],
+        "expr" : {
+          "ASTType" : "BoxFunctionInvocation",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "isNull( arguments.defaultValue )",
+          "position" : {
+            "start" : {
+              "line" : 78,
+              "column" : 8
+            },
+            "end" : {
+              "line" : 78,
+              "column" : 40
+            }
+          },
+          "comments" : [ ],
+          "name" : "isNull",
+          "arguments" : [ {
+            "ASTType" : "BoxArgument",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "arguments.defaultValue",
+            "position" : {
+              "start" : {
+                "line" : 78,
+                "column" : 16
+              },
+              "end" : {
+                "line" : 78,
+                "column" : 38
+              }
+            },
+            "comments" : [ ],
+            "name" : null,
+            "value" : {
+              "ASTType" : "BoxDotAccess",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : ".defaultValue",
+              "position" : {
+                "start" : {
+                  "line" : 78,
+                  "column" : 25
+                },
+                "end" : {
+                  "line" : 78,
+                  "column" : 38
+                }
+              },
+              "comments" : [ ],
+              "context" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "arguments",
+                "position" : {
+                  "start" : {
+                    "line" : 78,
+                    "column" : 16
+                  },
+                  "end" : {
+                    "line" : 78,
+                    "column" : 25
+                  }
+                },
+                "comments" : [ ],
+                "name" : "arguments"
+              },
+              "access" : {
+                "ASTType" : "BoxIdentifier",
+                "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+                "sourceText" : "defaultValue",
+                "position" : {
+                  "start" : {
+                    "line" : 78,
+                    "column" : 26
+                  },
+                  "end" : {
+                    "line" : 78,
+                    "column" : 38
+                  }
+                },
+                "comments" : [ ],
+                "name" : "DEFAULTVALUE"
+              },
+              "safe" : false
+            }
+          } ]
+        },
+        "operator" : {
+          "ASTType" : "BoxUnaryOperation",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Not"
+        }
+      },
+      "thenBody" : {
+        "ASTType" : "BoxStatementBlock",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "{\n\t\t\treturn arguments.defaultValue;\n\t\t}",
+        "position" : {
+          "start" : {
+            "line" : 78,
+            "column" : 43
+          },
+          "end" : {
+            "line" : 80,
+            "column" : 3
+          }
+        },
+        "comments" : [ ],
+        "body" : [ {
+          "ASTType" : "BoxReturn",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+          "sourceText" : "return arguments.defaultValue",
+          "position" : {
+            "start" : {
+              "line" : 79,
+              "column" : 3
+            },
+            "end" : {
+              "line" : 79,
+              "column" : 32
+            }
+          },
+          "comments" : [ ],
+          "expression" : {
+            "ASTType" : "BoxDotAccess",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : ".defaultValue",
+            "position" : {
+              "start" : {
+                "line" : 79,
+                "column" : 19
+              },
+              "end" : {
+                "line" : 79,
+                "column" : 32
+              }
+            },
+            "comments" : [ ],
+            "context" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "arguments",
+              "position" : {
+                "start" : {
+                  "line" : 79,
+                  "column" : 10
+                },
+                "end" : {
+                  "line" : 79,
+                  "column" : 19
+                }
+              },
+              "comments" : [ ],
+              "name" : "arguments"
+            },
+            "access" : {
+              "ASTType" : "BoxIdentifier",
+              "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+              "sourceText" : "defaultValue",
+              "position" : {
+                "start" : {
+                  "line" : 79,
+                  "column" : 20
+                },
+                "end" : {
+                  "line" : 79,
+                  "column" : 32
+                }
+              },
+              "comments" : [ ],
+              "name" : "DEFAULTVALUE"
+            },
+            "safe" : false
+          }
+        } ]
+      },
+      "elseBody" : null
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return The result value\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 49,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "value" : "The result value"
+      }
+    }, {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "throws"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+        "position" : {
+          "start" : {
+            "line" : 51,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 96
+          }
+        },
+        "comments" : [ ],
+        "value" : "CancellationException , ExecutionException, InterruptedException, TimeoutException"
+      }
+    }, {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "@return The result value\n\t *\n\t * ",
+      "position" : {
+        "start" : {
+          "line" : 49,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 51,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "return",
+        "position" : {
+          "start" : {
+            "line" : 49,
+            "column" : 6
+          },
+          "end" : {
+            "line" : 49,
+            "column" : 12
+          }
+        },
+        "comments" : [ ],
+        "value" : "return"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@return The result value\n\t *\n\t * ",
+        "position" : {
+          "start" : {
+            "line" : 49,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 5
+          }
+        },
+        "comments" : [ ],
+        "value" : "The result value"
+      }
+    }, {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+      "position" : {
+        "start" : {
+          "line" : 51,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 51,
+          "column" : 96
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "throws",
+        "position" : {
+          "start" : {
+            "line" : 51,
+            "column" : 6
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 12
+          }
+        },
+        "comments" : [ ],
+        "value" : "throws"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "@throws CancellationException , ExecutionException, InterruptedException, TimeoutException\n",
+        "position" : {
+          "start" : {
+            "line" : 51,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 51,
+            "column" : 96
+          }
+        },
+        "comments" : [ ],
+        "value" : "CancellationException , ExecutionException, InterruptedException, TimeoutException"
+      }
+    }, {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+      "position" : {
+        "start" : {
+          "line" : 42,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 43,
+          "column" : 85
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+        "position" : {
+          "start" : {
+            "line" : 42,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 43,
+            "column" : 85
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.\n\t * If the result is null, then you can pass the defaultValue argument to return it.",
+        "position" : {
+          "start" : {
+            "line" : 42,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 43,
+            "column" : 85
+          }
+        },
+        "comments" : [ ],
+        "value" : "Waits if necessary for at most the given time for this future to complete, and then returns its result, if available. If the result is null, then you can pass the defaultValue argument to return it."
+      }
+    } ]
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "boolean function isCancelled(){\n\t\treturn variables.native.isCancelled();\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 87,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 89,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * Returns true if this Future was cancelled before it completed normally.\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 84,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 86,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nReturns true if this Future was cancelled before it completed normally.\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+        "position" : {
+          "start" : {
+            "line" : 85,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 85,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+          "position" : {
+            "start" : {
+              "line" : 85,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 85,
+              "column" : 76
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+          "position" : {
+            "start" : {
+              "line" : 85,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 85,
+              "column" : 76
+            }
+          },
+          "comments" : [ ],
+          "value" : "Returns true if this Future was cancelled before it completed normally."
+        }
+      } ]
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : {
+      "ASTType" : "BoxReturnType",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "boolean",
+      "position" : {
+        "start" : {
+          "line" : 87,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 87,
+          "column" : 8
+        }
+      },
+      "comments" : [ ],
+      "type" : {
+        "ASTType" : "BoxReturnType",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Boolean"
+      },
+      "fqn" : null
+    },
+    "name" : "isCancelled",
+    "args" : [ ],
+    "body" : [ {
+      "ASTType" : "BoxReturn",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "return variables.native.isCancelled()",
+      "position" : {
+        "start" : {
+          "line" : 88,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 88,
+          "column" : 39
+        }
+      },
+      "comments" : [ ],
+      "expression" : {
+        "ASTType" : "BoxMethodInvocation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".isCancelled()",
+        "position" : {
+          "start" : {
+            "line" : 88,
+            "column" : 25
+          },
+          "end" : {
+            "line" : 88,
+            "column" : 39
+          }
+        },
+        "comments" : [ ],
+        "obj" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".native",
+          "position" : {
+            "start" : {
+              "line" : 88,
+              "column" : 18
+            },
+            "end" : {
+              "line" : 88,
+              "column" : 25
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxScope",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "variables",
+            "position" : {
+              "start" : {
+                "line" : 88,
+                "column" : 9
+              },
+              "end" : {
+                "line" : 88,
+                "column" : 18
+              }
+            },
+            "comments" : [ ],
+            "name" : "variables"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "native",
+            "position" : {
+              "start" : {
+                "line" : 88,
+                "column" : 19
+              },
+              "end" : {
+                "line" : 88,
+                "column" : 25
+              }
+            },
+            "comments" : [ ],
+            "name" : "NATIVE"
+          },
+          "safe" : false
+        },
+        "name" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "isCancelled",
+          "position" : {
+            "start" : {
+              "line" : 88,
+              "column" : 26
+            },
+            "end" : {
+              "line" : 88,
+              "column" : 37
+            }
+          },
+          "comments" : [ ],
+          "name" : "isCancelled"
+        },
+        "arguments" : [ ],
+        "safe" : false
+      }
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+      "position" : {
+        "start" : {
+          "line" : 85,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 85,
+          "column" : 76
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+        "position" : {
+          "start" : {
+            "line" : 85,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 85,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Returns true if this Future was cancelled before it completed normally.",
+        "position" : {
+          "start" : {
+            "line" : 85,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 85,
+            "column" : 76
+          }
+        },
+        "comments" : [ ],
+        "value" : "Returns true if this Future was cancelled before it completed normally."
+      }
+    } ]
+  }, {
+    "ASTType" : "BoxFunctionDeclaration",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "boolean function isDone(){\n\t\treturn variables.native.isDone();\n\t}",
+    "position" : {
+      "start" : {
+        "line" : 94,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 96,
+        "column" : 2
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * Returns true if completed in any fashion: normally, exceptionally, or via cancellation.\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 91,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 93,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nReturns true if completed in any fashion: normally, exceptionally, or via cancellation.\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+        "position" : {
+          "start" : {
+            "line" : 92,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 92,
+            "column" : 92
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+          "position" : {
+            "start" : {
+              "line" : 92,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 92,
+              "column" : 92
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+          "position" : {
+            "start" : {
+              "line" : 92,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 92,
+              "column" : 92
+            }
+          },
+          "comments" : [ ],
+          "value" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation."
+        }
+      } ]
+    } ],
+    "accessModifier" : null,
+    "modifiers" : [ ],
+    "type" : {
+      "ASTType" : "BoxReturnType",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "boolean",
+      "position" : {
+        "start" : {
+          "line" : 94,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 94,
+          "column" : 8
+        }
+      },
+      "comments" : [ ],
+      "type" : {
+        "ASTType" : "BoxReturnType",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "Boolean"
+      },
+      "fqn" : null
+    },
+    "name" : "isDone",
+    "args" : [ ],
+    "body" : [ {
+      "ASTType" : "BoxReturn",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "return variables.native.isDone()",
+      "position" : {
+        "start" : {
+          "line" : 95,
+          "column" : 2
+        },
+        "end" : {
+          "line" : 95,
+          "column" : 34
+        }
+      },
+      "comments" : [ ],
+      "expression" : {
+        "ASTType" : "BoxMethodInvocation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : ".isDone()",
+        "position" : {
+          "start" : {
+            "line" : 95,
+            "column" : 25
+          },
+          "end" : {
+            "line" : 95,
+            "column" : 34
+          }
+        },
+        "comments" : [ ],
+        "obj" : {
+          "ASTType" : "BoxDotAccess",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : ".native",
+          "position" : {
+            "start" : {
+              "line" : 95,
+              "column" : 18
+            },
+            "end" : {
+              "line" : 95,
+              "column" : 25
+            }
+          },
+          "comments" : [ ],
+          "context" : {
+            "ASTType" : "BoxScope",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "variables",
+            "position" : {
+              "start" : {
+                "line" : 95,
+                "column" : 9
+              },
+              "end" : {
+                "line" : 95,
+                "column" : 18
+              }
+            },
+            "comments" : [ ],
+            "name" : "variables"
+          },
+          "access" : {
+            "ASTType" : "BoxIdentifier",
+            "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+            "sourceText" : "native",
+            "position" : {
+              "start" : {
+                "line" : 95,
+                "column" : 19
+              },
+              "end" : {
+                "line" : 95,
+                "column" : 25
+              }
+            },
+            "comments" : [ ],
+            "name" : "NATIVE"
+          },
+          "safe" : false
+        },
+        "name" : {
+          "ASTType" : "BoxIdentifier",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "isDone",
+          "position" : {
+            "start" : {
+              "line" : 95,
+              "column" : 26
+            },
+            "end" : {
+              "line" : 95,
+              "column" : 32
+            }
+          },
+          "comments" : [ ],
+          "name" : "isDone"
+        },
+        "arguments" : [ ],
+        "safe" : false
+      }
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : null,
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : "output"
+      },
+      "value" : {
+        "ASTType" : "BoxBooleanLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : null,
+        "comments" : [ ],
+        "value" : true
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+      "position" : {
+        "start" : {
+          "line" : 92,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 92,
+          "column" : 92
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+        "position" : {
+          "start" : {
+            "line" : 92,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 92,
+            "column" : 92
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation.",
+        "position" : {
+          "start" : {
+            "line" : 92,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 92,
+            "column" : 92
+          }
+        },
+        "comments" : [ ],
+        "value" : "Returns true if completed in any fashion: normally, exceptionally, or via cancellation."
+      }
+    } ]
+  } ],
+  "annotations" : [ {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "accessors=\"true\"",
+    "position" : {
+      "start" : {
+        "line" : 8,
+        "column" : 10
+      },
+      "end" : {
+        "line" : 8,
+        "column" : 26
+      }
+    },
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "accessors",
+      "position" : {
+        "start" : {
+          "line" : 8,
+          "column" : 10
+        },
+        "end" : {
+          "line" : 8,
+          "column" : 19
+        }
+      },
+      "comments" : [ ],
+      "value" : "accessors"
+    },
+    "value" : {
+      "ASTType" : "BoxStringLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "\"true\"",
+      "position" : {
+        "start" : {
+          "line" : 8,
+          "column" : 20
+        },
+        "end" : {
+          "line" : 8,
+          "column" : 26
+        }
+      },
+      "comments" : [ ],
+      "value" : "true"
+    }
+  }, {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : null,
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : "see"
+    },
+    "value" : {
+      "ASTType" : "BoxStringLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+      "position" : {
+        "start" : {
+          "line" : 6,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 83
+        }
+      },
+      "comments" : [ ],
+      "value" : "https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html"
+    }
+  }, {
+    "ASTType" : "BoxAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : null,
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : "output"
+    },
+    "value" : {
+      "ASTType" : "BoxBooleanLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : null,
+      "comments" : [ ],
+      "value" : true
+    }
+  } ],
+  "documentation" : [ {
+    "ASTType" : "BoxDocumentationAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+    "position" : {
+      "start" : {
+        "line" : 6,
+        "column" : 3
+      },
+      "end" : {
+        "line" : 6,
+        "column" : 83
+      }
+    },
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "see",
+      "position" : {
+        "start" : {
+          "line" : 6,
+          "column" : 4
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 7
+        }
+      },
+      "comments" : [ ],
+      "value" : "see"
+    },
+    "value" : {
+      "ASTType" : "BoxStringLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "@see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html\n",
+      "position" : {
+        "start" : {
+          "line" : 6,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 83
+        }
+      },
+      "comments" : [ ],
+      "value" : "https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html"
+    }
+  }, {
+    "ASTType" : "BoxDocumentationAnnotation",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+    "position" : {
+      "start" : {
+        "line" : 2,
+        "column" : 3
+      },
+      "end" : {
+        "line" : 4,
+        "column" : 81
+      }
+    },
+    "comments" : [ ],
+    "key" : {
+      "ASTType" : "BoxFQN",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 81
+        }
+      },
+      "comments" : [ ],
+      "value" : "hint"
+    },
+    "value" : {
+      "ASTType" : "BoxStringLiteral",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+      "sourceText" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\n *\n * This is the return of most of the executors when you send runnables to execute",
+      "position" : {
+        "start" : {
+          "line" : 2,
+          "column" : 3
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 81
+        }
+      },
+      "comments" : [ ],
+      "value" : "This is a ColdBox Future Task object modeled and backed by Java's Future interface but with Dynamic Goodness!\nThis is the return of most of the executors when you send runnables to execute"
+    }
+  } ],
+  "properties" : [ {
+    "ASTType" : "BoxProperty",
+    "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+    "sourceText" : "property name=\"native\";",
+    "position" : {
+      "start" : {
+        "line" : 13,
+        "column" : 1
+      },
+      "end" : {
+        "line" : 13,
+        "column" : 24
+      }
+    },
+    "comments" : [ {
+      "ASTType" : "BoxDocComment",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.comment",
+      "sourceText" : "/**\n\t * The native future we model: java.util.concurrent.Future\n\t */",
+      "position" : {
+        "start" : {
+          "line" : 10,
+          "column" : 1
+        },
+        "end" : {
+          "line" : 12,
+          "column" : 5
+        }
+      },
+      "comments" : [ ],
+      "commentText" : "\nThe native future we model: java.util.concurrent.Future\n",
+      "annotations" : [ {
+        "ASTType" : "BoxDocumentationAnnotation",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+        "sourceText" : "The native future we model: java.util.concurrent.Future",
+        "position" : {
+          "start" : {
+            "line" : 11,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 11,
+            "column" : 60
+          }
+        },
+        "comments" : [ ],
+        "key" : {
+          "ASTType" : "BoxFQN",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "The native future we model: java.util.concurrent.Future",
+          "position" : {
+            "start" : {
+              "line" : 11,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 11,
+              "column" : 60
+            }
+          },
+          "comments" : [ ],
+          "value" : "hint"
+        },
+        "value" : {
+          "ASTType" : "BoxStringLiteral",
+          "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+          "sourceText" : "The native future we model: java.util.concurrent.Future",
+          "position" : {
+            "start" : {
+              "line" : 11,
+              "column" : 5
+            },
+            "end" : {
+              "line" : 11,
+              "column" : 60
+            }
+          },
+          "comments" : [ ],
+          "value" : "The native future we model: java.util.concurrent.Future"
+        }
+      } ]
+    } ],
+    "annotations" : [ {
+      "ASTType" : "BoxAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "name=\"native\"",
+      "position" : {
+        "start" : {
+          "line" : 13,
+          "column" : 10
+        },
+        "end" : {
+          "line" : 13,
+          "column" : 23
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "name",
+        "position" : {
+          "start" : {
+            "line" : 13,
+            "column" : 10
+          },
+          "end" : {
+            "line" : 13,
+            "column" : 14
+          }
+        },
+        "comments" : [ ],
+        "value" : "name"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "\"native\"",
+        "position" : {
+          "start" : {
+            "line" : 13,
+            "column" : 15
+          },
+          "end" : {
+            "line" : 13,
+            "column" : 23
+          }
+        },
+        "comments" : [ ],
+        "value" : "native"
+      }
+    } ],
+    "documentation" : [ {
+      "ASTType" : "BoxDocumentationAnnotation",
+      "ASTPackage" : "ortus.boxlang.compiler.ast.statement",
+      "sourceText" : "The native future we model: java.util.concurrent.Future",
+      "position" : {
+        "start" : {
+          "line" : 11,
+          "column" : 5
+        },
+        "end" : {
+          "line" : 11,
+          "column" : 60
+        }
+      },
+      "comments" : [ ],
+      "key" : {
+        "ASTType" : "BoxFQN",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "The native future we model: java.util.concurrent.Future",
+        "position" : {
+          "start" : {
+            "line" : 11,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 11,
+            "column" : 60
+          }
+        },
+        "comments" : [ ],
+        "value" : "hint"
+      },
+      "value" : {
+        "ASTType" : "BoxStringLiteral",
+        "ASTPackage" : "ortus.boxlang.compiler.ast.expression",
+        "sourceText" : "The native future we model: java.util.concurrent.Future",
+        "position" : {
+          "start" : {
+            "line" : 11,
+            "column" : 5
+          },
+          "end" : {
+            "line" : 11,
+            "column" : 60
+          }
+        },
+        "comments" : [ ],
+        "value" : "The native future we model: java.util.concurrent.Future"
+      }
+    } ]
+  } ]
+}

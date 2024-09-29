@@ -1,0 +1,59 @@
+{
+    "name":"My ColdBox App",
+    "version":"1.0.0",
+    "author":"You",
+    "location":"forgeboxStorage",
+    "slug":"my-coldbox-app",
+    "createPackageDirectory":false,
+    "type":"mvc",
+    "keywords":"",
+    "homepage":"",
+    "documentation":"",
+    "repository":{
+        "type":"",
+        "url":""
+    },
+    "bugs":"",
+    "shortDescription":"",
+    "contributors":[],
+    "ignore":[],
+    "devDependencies":{
+        "testbox":"^5.0.0",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-cfformat":"*"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/",
+        "bx-compat-cfml":"/Users/rob/.CommandBox/server/5DD1D6ACE35CFF473B8B719F5669685F-boxlang-testbed/boxlang-1.0.0-snapshot/WEB-INF/boxlang/modules/bx-compat-cfml/",
+        "bx-mysql":"/Users/rob/.CommandBox/server/5DD1D6ACE35CFF473B8B719F5669685F-boxlang-testbed/boxlang-1.0.0-snapshot/WEB-INF/boxlang/modules/bx-mysql/",
+        "cbmarkdown":"modules/cbmarkdown/",
+        "BCrypt":"modules/BCrypt/",
+        "qb":"modules/qb/",
+        "cbcsrf":"modules/cbcsrf/"
+    },
+    "dependencies":{
+        "coldbox":"^7.0.0",
+        "bx-compat-cfml":"^1.6.0+9",
+        "bx-mysql":"^1.0.0+5",
+        "cbmarkdown":"^3.6.0+1",
+        "BCrypt":"^3.1.0+4",
+        "qb":"^9.11.1",
+        "cbcsrf":"^3.1.0+16"
+    },
+    "scripts":{
+        "onServerInitialInstall":"install bx-compat-cfml,bx-mysql@^1.0.0+5",
+        "postInstall":"pathExists .env || cp .env.example .env && package set ignore=[]",
+        "format":"cfformat run config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc ./.cfformat.json --overwrite",
+        "format:check":"cfformat check config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc ./.cfformat.json",
+        "format:watch":"cfformat watch path='config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc' settingsPath='.cfformat.json'",
+        "docker:build":"!docker build --no-cache -t my-coldbox-app -f ./build/Dockerfile ./",
+        "docker:run":"!docker run -it -p 8080:8080 my-coldbox-app",
+        "docker:bash":"!docker run -it my-coldbox-app /bin/bash",
+        "docker:stack":"!docker compose -f build/docker-compose.yaml ${1}"
+    },
+    "testbox":{
+        "runner":"/tests/runner.cfm"
+    }
+}

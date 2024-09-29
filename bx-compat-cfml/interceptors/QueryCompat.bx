@@ -1,0 +1,152 @@
+/**
+ * [BoxLang]
+ *
+ * Copyright [2023] [Ortus Solutions, Corp]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import java:ortus.boxlang.runtime.types.immutable.ImmutableStruct;
+import java:ortus.boxlang.runtime.scopes.Key;
+import java:ortus.boxlang.runtime.jdbc.QueryOptions;
+
+/**
+ * Improves queryExecute() and Query component compatibility with CFML syntax and options.
+ *
+ * <ul>
+ * <li>Alias `cfsqltype` to `sqltype` in the query parameters</li>
+ * <li>Adds  `blockfactor` to `fetchsize` in the query options.</li>
+ * </ul>
+ */
+class{
+
+	/**
+	 * Injections by BoxLang
+	 */
+
+	property name;
+	property properties;
+	property log;
+	property interceptorService;
+	property boxRuntime;
+	property moduleRecord;
+
+	function configure(){
+		// Nothing to do here
+	}
+
+	/**
+	 * Listen to query construction and modify the query parameters, copying `cfsqltype` to `sqltype`
+	 *
+	 * Incoming data:
+	 * - sql : The SQL string
+	 * - parameters : The parameters to be used in the query
+	 * - pendingQuery : The BoxLang query class used to build and execute queries
+	 * - options : The QueryOptions class populated with query options from `queryExecute()` or `<bx:query>`
+	 */
+	function onQueryBuild( struct data ){
+		if ( IsStruct( data.bindings ) ){
+			data.bindings.each( ( key, param ) -> {
+				if( isStruct( param ) && param.keyExists( "cfsqltype" ) && !param.keyExists( "sqltype" ) ){
+					param.sqltype = param.cfsqltype;
+				}
+			});
+		} else if ( IsArray( data.bindings ) ){
+			data.bindings.map( ( param ) -> {
+				if( isStruct( param ) && param.keyExists( "cfsqltype" ) && !param.keyExists( "sqltype" ) ){
+					param.sqltype = param.cfsqltype;
+				}
+			});
+		}
+
+		// the unmodifiable, original query options from the query
+		var structOptions = data.options.toStruct();
+		// Modifiable QueryOptions class
+		var modifiedOptions = {};
+
+		// add blockfactor -> fetchsize alias
+		if( structOptions.keyExists( "blockfactor" ) && !structOptions.keyExists( "fetchSize" ) ){
+			modifiedOptions.fetchSize = structOptions.blockfactor;
+		}
+
+		/**
+		 * add cache attribute aliases:
+		 *
+		 * - `cacheId` -> `cacheKey`
+		 * - `cacheRegion` -> `cacheProvider`
+		 * - `cachedWithin` -> `cacheTimeout` OR `cachedWithin="request"` should also be implemented
+		 * - `cachedAfter` -> custom datetime check, followed by `cache=true, cacheTimeout=0`
+		*/
+
+		if( structOptions.keyExists( "cacheId" ) && !structOptions.keyExists( "cacheKey" ) ){
+			modifiedOptions.cacheKey = structOptions.cacheId;
+		}
+		if( structOptions.keyExists( "cacheRegion" ) && !structOptions.keyExists( "cacheProvider" ) ){
+			modifiedOptions.cacheProvider = structOptions.cacheRegion;
+		}
+		if( structOptions.keyExists( "cachedWithin" ) && !structOptions.keyExists( "cacheTimeout" )){
+			if( structOptions.cachedWithin == "request" ){
+				// TODO: Implement cachedWithin="request"
+			} else {
+				// Else it's a simple timespan/duration, just like the new cacheTimeout attribute
+				modifiedOptions.cacheTimeout = structOptions.cachedWithin;
+				modifiedOptions.cache = structOptions.cache ?: true;
+			}
+		}
+		if( structOptions.keyExists( "cachedAfter" ) ){
+			if( dateCompare( structOptions.cachedAfter, now() ) <= 0 ){
+				// If a cachedAfter date value is set and it's older than the current time, cache the query regardless of all other cache options.
+				modifiedOptions.cache = structOptions.cache ?: true;
+			}
+		}
+
+		// Construct a new QueryOptions instance from the modified options struct
+		if( !modifiedOptions.isEmpty() ){
+			data.options = new QueryOptions( structOptions.append( modifiedOptions, true ) );
+		}
+	}
+
+
+	/**
+	 * Modify the query results before they are returned to the calling code.
+	 *
+	 * This is where we handle CFML compatibility features at the data level, such as:
+	 *
+	 * - converting null values to empty strings [BL-164](https://ortussolutions.atlassian.net/browse/BL-164)
+	 * - converting time values to the time specified in the `timezone` query option [BL-116](https://ortussolutions.atlassian.net/browse/BL-116)
+	 *
+	 * Incoming data:
+	 * - sql			:  The original, unmodified SQL string,
+	 * - bindings		:  Parameter binding values,
+	 * - executionTime	:  The query execution time,
+	 * - data			:  The query results,
+	 * - result			:  The return value from the statement execution.
+	 * - pendingQuery	:  The BoxLang PendingQuery instance - https://s3.amazonaws.com/apidocs.ortussolutions.com/boxlang/1.0.0/ortus/boxlang/runtime/jdbc/PendingQuery.html
+	 * - executedQuery	:  The BoxLang ExecutedQuery instance - https://s3.amazonaws.com/apidocs.ortussolutions.com/boxlang/1.0.0/ortus/boxlang/runtime/jdbc/ExecutedQuery.html
+	*/
+	function postQueryExecute( struct data ){
+
+		// Only active if the setting: queryNullToEmpty is true
+		if( properties.containsKey( "queryNullToEmpty" ) && properties.queryNullToEmpty ){
+			data.data.map( ( row ) -> {
+				row.each( ( key, value, row ) -> {
+					// CFML Compatibility: Convert null values to empty strings
+					if( isNull( row[ key ] ) ){
+						row[ key ] = "";
+					}
+				} );
+				return row;
+			} );
+		}
+	}
+}
